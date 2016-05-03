@@ -1,7 +1,133 @@
+html,
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 a {
-  color: #00b7ff;
+  text-decoration: none;
+}
+header {
+  background: #9baad1;
+  border-bottom: 2px solid #555;
+}
+header ul {
+  margin: 0;
+  padding: 0 2rem;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+}
+header li {
+  background: linear-gradient(to right, transparent 0%, #e3eafd 0.5rem, #e3eafd calc(100% - 0.5rem), transparent 100%);
+  flex: 0 1 auto;
+  line-height: 1.5;
+  font-size: 0.81rem;
+  padding: 0 1rem;
+}
+header a {
+  color: #002f06;
+  font-weight: bold;
+}
+header li:first-of-type a {
+  color: #fd0015;
+}
+#logo-panel {
+  background: #6f96d1;
+  min-height: 4rem;
+}
+/**
+ * Login panel
+ */
+.login-panel {
+  height: 8rem;
+  position: relative;
+}
+.login-panel form {
+  padding: 0;
+  margin: 0;
+}
+.login-panel .login-box {
+  min-height: 100%;
+  position: absolute;
+  background: #becfeb;
+  border-bottom-left-radius: 1rem;
+  padding: 0.5rem;
+  width: 15rem;
+}
+.login-panel .lapiduch-info {
+  border-left: 2rem solid #fff;
+  min-height: 100%;
+  padding: 0.3rem;
+  padding-left: 13.3rem;
+  background: #e8edf1;
+}
+.login-panel .form-group {
+  margin-bottom: 0.3rem;
+}
+.login-panel .col-sm-9 {
+  padding-left: 0.1rem;
+}
+/**
+ * Action panel
+ */
+.action-panel {
+  background: linear-gradient(to bottom, #9baad1 0%, #becfeb 0.5rem, #becfeb calc(100% - 0.5rem), #9baad1 100%);
+  margin: 0.1rem 0 0.2rem 0;
+}
+.action-panel ul {
+  margin: 0;
+  padding: 0 2rem;
+  display: flex;
+  list-style: none;
+  justify-content: space-around;
+}
+.action-panel li {
+  flex: 0 1 auto;
+  line-height: 1.5;
+  font-size: 0.81rem;
+  padding: 0 1rem;
+}
+.action-panel a {
+  color: #002f06;
+  font-weight: bold;
+}
+/**
+ * Index
+ */
+.index-layout {
+  position: relative;
+}
+.index-layout .index-clubs {
+  background: #e8edf1;
+  min-height: 100%;
+  width: 15rem;
+  padding: 1rem;
+  position: absolute;
+}
+.index-layout .index-clubs .index-clubs-header {
+  text-align: center;
+}
+.index-layout .index-clubs ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  justify-content: space-around;
+}
+.index-layout .index-clubs li {
+  line-height: 1.5;
+  font-size: 0.81rem;
+  padding: 0;
+}
+.index-layout .index-clubs a {
+  color: #002f06;
+  font-weight: bold;
+}
+.index-layout .index-top {
+  min-height: 100%;
+  padding: 1rem;
+  padding-left: 16rem;
 }

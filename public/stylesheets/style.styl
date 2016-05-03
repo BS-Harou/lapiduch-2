@@ -1,5 +1,123 @@
+html, body
+	font-size: 100%
+	
 body
-  padding: 50px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+	padding: 0
+	margin: 0
+	font-family: Arial, Helvetica, sans-serif
+
 a
-  color: #00B7FF
+	text-decoration: none
+
+header
+	background: rgb(155, 170, 209)
+	border-bottom: 2px solid #555
+	ul
+		margin: 0
+		padding: 0 2rem
+		display: flex
+		list-style: none
+		justify-content: space-around
+	li
+		background: linear-gradient(to right, transparent 0%, rgb(227, 234, 253) 0.5rem, rgb(227, 234, 253) calc(100% - 0.5rem), transparent 100%)
+		flex: 0 1 auto
+		line-height: 1.5
+		font-size: 0.81rem
+		padding: 0 1rem
+	a
+		color: rgb(0, 47, 6)
+		font-weight: bold
+	
+	li:first-of-type a
+		color: rgb(253, 0, 21)
+		
+#logo-panel
+	background: rgb(111, 150, 209)
+	min-height: 4rem
+
+/**
+ * Login panel
+ */
+.login-panel
+	height: 8rem
+	position: relative
+	
+	form
+		padding: 0
+		margin: 0
+	
+	.login-box
+		min-height: 100%
+		position: absolute
+		background: rgb(190, 207, 235)
+		border-bottom-left-radius: 1rem
+		padding: 0.5rem
+		width: 15rem
+		
+	.lapiduch-info
+		border-left: 2rem solid white
+		min-height: 100%
+		padding: 0.3rem
+		padding-left: 13.3rem
+		background: rgb(232, 237, 241)
+		
+	.form-group
+		margin-bottom: 0.3rem
+		
+	.col-sm-9
+		padding-left: 0.1rem
+		
+/**
+ * Action panel
+ */
+ 
+.action-panel
+	background: linear-gradient(to bottom, rgb(155, 170, 209) 0%, rgb(190, 207, 235) 0.5rem, rgb(190, 207, 235) calc(100% - 0.5rem), rgb(155, 170, 209) 100%)
+	margin: 0.1rem 0 0.2rem 0
+	ul
+		margin: 0
+		padding: 0 2rem
+		display: flex
+		list-style: none
+		justify-content: space-around
+	li
+		flex: 0 1 auto
+		line-height: 1.5
+		font-size: 0.81rem
+		padding: 0 1rem
+	a
+		color: rgb(0, 47, 6)
+		font-weight: bold
+	
+/**
+ * Index
+ */
+.index-layout
+	position: relative
+	.index-clubs
+		background: rgb(232, 237, 241)
+		min-height: 100%
+		width: 15rem
+		padding: 1rem
+		position: absolute
+		
+		.index-clubs-header
+			text-align: center
+		
+		ul
+			margin: 0
+			padding: 0
+			list-style: none
+			justify-content: space-around
+		li
+			line-height: 1.5
+			font-size: 0.81rem
+			padding: 0
+		a
+			color: rgb(0, 47, 6)
+			font-weight: bold
+		
+	.index-top
+		min-height: 100%
+		padding: 1rem
+		padding-left: 16rem

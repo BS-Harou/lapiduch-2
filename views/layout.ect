@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <title><%= @title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<title><%= @title %></title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+	<link rel="stylesheet" href="/stylesheets/style.css" />
+	
 </head>
 <body>
-    <main>
-        <% content %>
-    </main>
+	<header>
+		<nav>
+			<ul>
+				<li>
+					<a href="/registrace">Registrace</a>
+				</li>
+				<li>
+					<a href="/navod">Návod</a>
+				</li>
+				<li>
+					<a href="/kluby">Kluby</a>
+				</li>
+				<li>
+					<a href="/lapiduch">Lapiduch.cz</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+	<div id="logo-panel">
+		<img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQi2pkXhzKf2cn424vNH3dRCox81PWvG4wfGk10_62D8LmCl9zoHQ" />
+	</div>
+	<main>
+		<% content %>
+	</main>
 </body>
 </html>

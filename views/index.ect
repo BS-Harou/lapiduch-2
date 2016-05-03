@@ -1,5 +1,203 @@
 <% extend 'layout' %>
 
-<h1><%= @title %></h1>
-<p>Welcome to <%= @title %></p>
+<div class="login-panel">
+	<div class="login-box">
+		<form method="post" class="form-horizontal">
+			<div class="form-group form-group-sm">
+				<label for="login-nickname" class="col-sm-3 control-label">Jméno: </label>
+				<div class="col-sm-9">
+					<input type="text" id="login-nickname" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<label for="login-password" class="col-sm-3 control-label">Heslo: </label>
+				<div class="col-sm-9">
+					<input type="password" id="login-password" class="form-control"/>
+				</div>
+			</div>
+			<div class="form-group form-group-sm">
+				<div class="col-sm-offset-3 col-sm-9">
+					<button type="submit" class="btn btn-default">Vstoupit!</button>
+				</div>
+			</div>
+		</form>
+	</div>
 
+	<div class="lapiduch-info">
+		Vítejte na diskusním serveru Lapiduch. Pokud jste tu noví a nevíte se s něčím rady, je tu pro Vás připraven klub Začátečníci na Lapiduchu. Někdy se Vám mohou hodit kluby Chyby, Potéže s hesly, FAQ, Ikonky či Návrhy a stížnosti. Rozhodně Vám doporučujeme si do oblíbených klubů zařadit a navštěvovat Novinky, kde se dozvíte o chystaných či provedených změnách na tomto diskuzním serveru.
+	</div>
+</div>
+
+<div class="action-panel">
+	<ul>
+		<li>
+			<a href="/registrace">Nový uživatel</a>
+		</li>
+		<li>
+			<a href="/faq">FAQ</a>
+		</li>
+		<li>
+			<a href="/navod">Návod</a>
+		</li>
+		<li>
+			<a href="/pritomni">Přítomní</a>
+		</li>
+		<li>
+			<a href="/novy-klub">Založit nový klub</a>
+		</li>
+		<li>
+			<a href="/odhlasit">Odhlásit</a>
+		</li>
+	</ul>
+</div>
+
+<div class="index-layout ">
+
+
+	<div class="index-clubs">
+		<div class="index-clubs-header">
+			Kategorie
+		</div>
+		<ul>
+			<li>
+				<a href="/">Doprava</a>
+			</li>
+			<li>
+				<a href="/">Fankluby</a>
+			</li>
+			<li>
+				<a href="/">Film</a>
+			</li>
+			<li>
+				<a href="/">Hry</a>
+			</li>
+			<li>
+				<a href="/">Hudba</a>
+			</li>
+			<li>
+				<a href="/">Humor</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="index-top container-fluid">
+		<div class="row">
+			<div class="top-column  col-md-4">
+				<div class="top-header">Nej</div>
+				<ul>
+					<li>
+						<a href="/">1. Doprava</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">3. Film</a>
+					</li>
+					<li>
+						<a href="/">4. Hry</a>
+					</li>
+					<li>
+						<a href="/">5. Hudba</a>
+					</li>
+					<li>
+						<a href="/">6. Humor</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">7. Film</a>
+					</li>
+					<li>
+						<a href="/">8. Hry</a>
+					</li>
+					<li>
+						<a href="/">9. Hudba</a>
+					</li>
+					<li>
+						<a href="/">10. Humor</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="top-column col-md-4">
+				<div class="top-header">Nej</div>
+				<ul>
+					<li>
+						<a href="/">1. Doprava</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">3. Film</a>
+					</li>
+					<li>
+						<a href="/">4. Hry</a>
+					</li>
+					<li>
+						<a href="/">5. Hudba</a>
+					</li>
+					<li>
+						<a href="/">6. Humor</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">7. Film</a>
+					</li>
+					<li>
+						<a href="/">8. Hry</a>
+					</li>
+					<li>
+						<a href="/">9. Hudba</a>
+					</li>
+					<li>
+						<a href="/">10. Humor</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="top-column">
+				<div class="top-header">Nej</div>
+				<ul>
+					<li>
+						<a href="/">1. Doprava</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">3. Film</a>
+					</li>
+					<li>
+						<a href="/">4. Hry</a>
+					</li>
+					<li>
+						<a href="/">5. Hudba</a>
+					</li>
+					<li>
+						<a href="/">6. Humor</a>
+					</li>
+					<li>
+						<a href="/">2. Fankluby</a>
+					</li>
+					<li>
+						<a href="/">7. Film</a>
+					</li>
+					<li>
+						<a href="/">8. Hry</a>
+					</li>
+					<li>
+						<a href="/">9. Hudba</a>
+					</li>
+					<li>
+						<a href="/">10. Humor</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
