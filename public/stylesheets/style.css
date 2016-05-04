@@ -9,6 +9,7 @@ body {
 }
 a {
   text-decoration: none;
+  color: #530002;
 }
 header {
   background: #9baad1;
@@ -119,18 +120,19 @@ header li:first-of-type a {
   justify-content: space-around;
 }
 .index-layout .index-clubs li {
-  line-height: 1.5;
-  font-size: 0.81rem;
+  line-height: 1.4;
+  font-size: 0.875rem;
   padding: 0;
 }
 .index-layout .index-clubs a {
   color: #002f06;
-  font-weight: bold;
+}
+.index-layout .index-clubs .cat-amount {
+  font-size: 0.625rem;
 }
 .index-layout .index-top {
   min-height: 100%;
-  padding: 1rem;
-  padding-left: 16rem;
+  padding: 1rem 3rem 5rem 18rem;
 }
 .index-layout .index-top .top-header {
   margin-bottom: 1rem;
@@ -139,10 +141,12 @@ header li:first-of-type a {
   margin-bottom: 1rem;
 }
 .index-layout .index-top a {
-  color: #530002;
   font-size: 1rem;
 }
 .index-layout .index-top .top-info {
   color: #364035;
   font-size: 0.75rem;
+}
+.index-layout .index-top .top-link-all {
+  padding: 1rem 0;
 }
