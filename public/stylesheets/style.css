@@ -68,7 +68,7 @@ header li:first-of-type a {
 .login-panel .form-group {
   margin-bottom: 0.3rem;
 }
-.login-panel .col-sm-9 {
+.login-panel .login-control {
   padding-left: 0.1rem;
 }
 /**
@@ -110,6 +110,7 @@ header li:first-of-type a {
 }
 .index-layout .index-clubs .index-clubs-header {
   text-align: center;
+  margin-bottom: 1rem;
 }
 .index-layout .index-clubs ul {
   margin: 0;
@@ -130,4 +131,7 @@ header li:first-of-type a {
   min-height: 100%;
   padding: 1rem;
   padding-left: 16rem;
+}
+.index-layout .index-top .top-header {
+  margin-bottom: 1rem;
 }
