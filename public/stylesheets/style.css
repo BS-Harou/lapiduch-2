@@ -135,3 +135,14 @@ header li:first-of-type a {
 .index-layout .index-top .top-header {
   margin-bottom: 1rem;
 }
+.index-layout .index-top li {
+  margin-bottom: 1rem;
+}
+.index-layout .index-top a {
+  color: #530002;
+  font-size: 1rem;
+}
+.index-layout .index-top .top-info {
+  color: #364035;
+  font-size: 0.75rem;
+}
