@@ -2,13 +2,13 @@
 
 <div class="login-panel">
 	<div class="login-box">
-		<form method="post">
+		<form method="post" action="/auth/prihlaseni">
 			<div class="form-group row">
 				<label for="login-nickname" class="col-sm-3 form-control-label">
 					<small>Jméno:</small>
 				</label>
 				<div class="col-sm-9 login-control">
-					<input type="text" id="login-nickname" class="form-control form-control-sm" />
+					<input type="text" id="login-nickname" name="username" class="form-control form-control-sm" />
 				</div>
 			</div>
 			<div class="form-group row">
@@ -16,11 +16,11 @@
 					<small>Heslo:</small>
 				</label>
 				<div class="col-sm-9 login-control">
-					<input type="password" id="login-password" class="form-control form-control-sm"/>
+					<input type="password" id="login-password" name="password" class="form-control form-control-sm"/>
 				</div>
 			</div>
 			<div class="form-group row">
-				<div class="col-sm-offset-3 col-sm-9 login-control ">
+				<div class="col-sm-offset-3 col-sm-9 login-control">
 					<button type="submit" class="btn btn-secondary btn-sm">Vstoupit!</button>
 				</div>
 			</div>

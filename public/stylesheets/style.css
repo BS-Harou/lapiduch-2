@@ -134,9 +134,11 @@ header li:first-of-type a {
 }
 .index-layout .index-top .top-header {
   margin-bottom: 1rem;
+  white-space: nowrap;
 }
 .index-layout .index-top li {
   margin-bottom: 1rem;
+  white-space: nowrap;
 }
 .index-layout .index-top a {
   font-size: 1rem;

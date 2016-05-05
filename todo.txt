@@ -1,0 +1,8 @@
+- Redis store for sessions
+- MongoDB for otehr persistent stuff
+- Responsive page
+- passport fb/tw/g auth
+- split app.coffee
+- CSRF form protection
+- Google "I am not a robot" captcha for signup
+- DB init skript (default categories, admin user (conf name), all docs)
