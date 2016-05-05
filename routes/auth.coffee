@@ -6,7 +6,7 @@ LocalStrategy = require('passport-local').Strategy;
 
 # GET users listing
 router.get '/registrace', (req, res, next) ->
-	res.render 'signup', { title: 'Registrace' }
+	res.render 'signup', { title: 'Registrace', csrfToken: req.csrfToken() }
 
 # GET users listing
 router.post '/registrace', (req, res, next) ->

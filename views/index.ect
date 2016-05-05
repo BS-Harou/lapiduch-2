@@ -3,6 +3,7 @@
 <div class="login-panel">
 	<div class="login-box">
 		<form method="post" action="/auth/prihlaseni">
+			<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
 			<div class="form-group row">
 				<label for="login-nickname" class="col-sm-3 form-control-label">
 					<small>Jméno:</small>

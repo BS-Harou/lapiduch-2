@@ -9,6 +9,7 @@ session = require('express-session')
 passport = require('passport')
 LocalStrategy = require('passport-local').Strategy
 helmet = require('helmet')
+csurf = require('csurf')
 
 routes = require('./routes/index')
 auth = require('./routes/auth')
@@ -93,6 +94,8 @@ app.use express.static(path.join(__dirname, 'public'))
 app.use session({ secret: 'keep scrolling', resave: false, saveUninitialized: false, name: 'sesna' })
 app.use passport.initialize()
 app.use passport.session()
+app.use csurf()
+app.use '/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/')
 app.use '/', routes
 app.use '/auth', auth
 

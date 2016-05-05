@@ -6,6 +6,7 @@
 		Uspesna registrace, mrkni na mail
 	<% else : %>
 	<form method="post" action="/auth/registrace">
+		<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
 		<div class="container">
 			<div class="form-group row">
 				<label for="signup-username" class="col-sm-3 form-control-label">

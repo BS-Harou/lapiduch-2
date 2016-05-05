@@ -7,6 +7,12 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 
 # GET home page
 router.get '/', (req, res, next) ->
-	res.render 'index', { title: 'Express', topList: topList, categoriesList: categoriesList }
+	res.render 'index', {
+		title: 'Express'
+		topList: topList
+		categoriesList: categoriesList
+		csrfToken: req.csrfToken()
+	}
+
 
 module.exports = router
