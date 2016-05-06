@@ -1,7 +1,13 @@
-<ul>
-	<% for cat in @categoriesList : %>
-	<li>
-		<a href="/"><%= cat %> <span class="cat-amount">( 12 )</span></a>
-	</li>
-	<% end %>
-</ul>
+<div class="categories-list">
+	<div class="simple-heading">
+		Kategorie
+	</div>
+	<ul>
+		<% for cat in @categoriesList : %>
+		<li>
+			<a href="/"><%= cat %> <span class="cat-amount">( 12 )</span></a>
+		</li>
+		<% end %>
+	</ul>
+</div>
+

@@ -32,54 +32,70 @@ header
 	li:first-of-type a
 		color: rgb(253, 0, 21)
 		
+		
 #logo-panel
 	background: rgb(111, 150, 209)
 	min-height: 4rem
+	
+/**
+ * General
+ */
+.row-no-padding > [class*="col-"]
+	padding-left: 0 !important
+	padding-right: 0 !important
+
 
 /**
- * Login panel
+ * Top panel
  */
-.login-panel
-	height: 8rem
-	position: relative
-	
-	form
-		padding: 0
-		margin: 0
-	
-	.login-box
-		height: 100%
-		position: absolute
+.top-panel
+	display: flex
+	flex-flow: row nowrap
+	align-items: stretch
+	margin-bottom: 0.2rem
+
+	.top-panel-left
+		flex: 0 0 auto
 		background: rgb(190, 207, 235)
 		border-bottom-left-radius: 1rem
 		padding: 0.5rem
 		width: 15rem
 		
-	.lapiduch-info
-		border-left: 2rem solid white
-		height: 100%
-		padding: 0.3rem
-		padding-left: 13.3rem
+	.top-panel-right
+		flex: 1 1 auto
+		padding: 0.5rem
 		background: rgb(232, 237, 241)
-		overflow: hidden
+			
 		
+/**
+ * Login form
+ */
+.login-form
+	padding: 0
+	margin: 0
+	
 	.form-group
 		margin-bottom: 0.1rem
 		
-	.login-control
-		//padding-left: 0.1rem
+	label[class*="col-"]
+		text-align: right
+		font-size: 0.9rem
+		padding-right: 0.3rem !important
 		
+
 /**
  * Action panel
  */
  
 .action-panel
 	background: linear-gradient(to bottom, rgb(155, 170, 209) 0%, rgb(190, 207, 235) 0.5rem, rgb(190, 207, 235) calc(100% - 0.5rem), rgb(155, 170, 209) 100%)
-	margin: 0.1rem 0 0.2rem 0
+	margin-bottom: 0.2rem
+	
 	ul
 		margin: 0
 		padding: 0 2rem
 		display: flex
+		flex-flow: row wrap
 		list-style: none
 		justify-content: space-around
 	li
@@ -87,59 +103,70 @@ header
 		line-height: 1.5
 		font-size: 0.81rem
 		padding: 0 1rem
+		white-space: nowrap
 	a
 		color: rgb(0, 47, 6)
 		font-weight: bold
 	
 /**
- * Index
+ * Content
  */
-.index-layout
-	position: relative
-	.index-clubs
+.simple-heading
+	margin-bottom: 1rem
+	white-space: nowrap
+			
+.content
+	display: flex
+	
+	.content-left
 		background: rgb(232, 237, 241)
+		border-top-left-radius: 1rem
+		flex: 0 0 auto
 		min-height: 100%
 		width: 15rem
 		padding: 1rem
-		position: absolute
 		
-		.index-clubs-header
-			text-align: center
-			margin-bottom: 1rem
-		
-		ul
-			margin: 0
-			padding: 0
-			list-style: none
-			justify-content: space-around
-		li
-			line-height: 1.4
-			font-size: 0.875rem
-			padding: 0
-		a
-			color: rgb(0, 47, 6)
-
-		.cat-amount
-			font-size: 0.625rem
-		
-	.index-top
+	.content-right
+		flex: 1 1 auto
 		min-height: 100%
-		padding: 1rem 3rem 5rem 18rem
+		padding: 1rem 3rem 5rem 3rem
+			
+/**
+ * Categories list
+ */
+.categories-list
+	.simple-heading
+		text-align: center
 		
-		.top-header
-			margin-bottom: 1rem
-			white-space: nowrap
+	ul
+		margin: 0
+		padding: 0
+		list-style: none
+		justify-content: space-around
+	li
+		line-height: 1.4
+		font-size: 0.875rem
+		padding: 0
+	a
+		color: rgb(0, 47, 6)
 
-		li
-			margin-bottom: 1rem
-			white-space: nowrap
+	.cat-amount
+		font-size: 0.625rem
+		
+/**
+ * Top clubs
+ */
+.top-clubs
+	li
+		margin-bottom: 1rem
+		white-space: nowrap
 
-		a
-			font-size: 1rem
+	a
+		font-size: 1rem
 
-		.top-info
-			color: #364035
-			font-size: 0.75rem
+	.top-info
+		color: #364035
+		font-size: 0.75rem
 
-		.top-link-all
-			padding: 1rem 0
+	.top-link-all
+		padding: 1rem 0

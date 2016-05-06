@@ -41,46 +41,60 @@ header li:first-of-type a {
   min-height: 4rem;
 }
 /**
- * Login panel
+ * General
  */
-.login-panel {
-  height: 8rem;
-  position: relative;
+.row-no-padding > [class*="col-"] {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
-.login-panel form {
-  padding: 0;
-  margin: 0;
+/**
+ * Top panel
+ */
+.top-panel {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  margin-bottom: 0.2rem;
 }
-.login-panel .login-box {
-  height: 100%;
-  position: absolute;
+.top-panel .top-panel-left {
+  flex: 0 0 auto;
   background: #becfeb;
   border-bottom-left-radius: 1rem;
   padding: 0.5rem;
   width: 15rem;
 }
-.login-panel .lapiduch-info {
-  border-left: 2rem solid #fff;
-  height: 100%;
-  padding: 0.3rem;
-  padding-left: 13.3rem;
+.top-panel .top-panel-right {
+  flex: 1 1 auto;
+  padding: 0.5rem;
   background: #e8edf1;
-  overflow: hidden;
 }
-.login-panel .form-group {
+/**
+ * Login form
+ */
+.login-form {
+  padding: 0;
+  margin: 0;
+}
+.login-form .form-group {
   margin-bottom: 0.1rem;
+}
+.login-form label[class*="col-"] {
+  text-align: right;
+  font-size: 0.9rem;
+  padding-right: 0.3rem !important;
 }
 /**
  * Action panel
  */
 .action-panel {
   background: linear-gradient(to bottom, #9baad1 0%, #becfeb 0.5rem, #becfeb calc(100% - 0.5rem), #9baad1 100%);
-  margin: 0.1rem 0 0.2rem 0;
+  margin-bottom: 0.2rem;
 }
 .action-panel ul {
   margin: 0;
   padding: 0 2rem;
   display: flex;
+  flex-flow: row wrap;
   list-style: none;
   justify-content: space-around;
 }
@@ -89,64 +103,72 @@ header li:first-of-type a {
   line-height: 1.5;
   font-size: 0.81rem;
   padding: 0 1rem;
+  white-space: nowrap;
 }
 .action-panel a {
   color: #002f06;
   font-weight: bold;
 }
 /**
- * Index
+ * Content
  */
-.index-layout {
-  position: relative;
+.simple-heading {
+  margin-bottom: 1rem;
+  white-space: nowrap;
 }
-.index-layout .index-clubs {
+.content {
+  display: flex;
+}
+.content .content-left {
   background: #e8edf1;
+  border-top-left-radius: 1rem;
+  flex: 0 0 auto;
   min-height: 100%;
   width: 15rem;
   padding: 1rem;
-  position: absolute;
 }
-.index-layout .index-clubs .index-clubs-header {
+.content .content-right {
+  flex: 1 1 auto;
+  min-height: 100%;
+  padding: 1rem 3rem 5rem 3rem;
+}
+/**
+ * Categories list
+ */
+.categories-list .simple-heading {
   text-align: center;
-  margin-bottom: 1rem;
 }
-.index-layout .index-clubs ul {
+.categories-list ul {
   margin: 0;
   padding: 0;
   list-style: none;
   justify-content: space-around;
 }
-.index-layout .index-clubs li {
+.categories-list li {
   line-height: 1.4;
   font-size: 0.875rem;
   padding: 0;
 }
-.index-layout .index-clubs a {
+.categories-list a {
   color: #002f06;
 }
-.index-layout .index-clubs .cat-amount {
+.categories-list .cat-amount {
   font-size: 0.625rem;
 }
-.index-layout .index-top {
-  min-height: 100%;
-  padding: 1rem 3rem 5rem 18rem;
-}
-.index-layout .index-top .top-header {
+/**
+ * Top clubs
+ */
+.top-clubs li {
   margin-bottom: 1rem;
   white-space: nowrap;
 }
-.index-layout .index-top li {
-  margin-bottom: 1rem;
-  white-space: nowrap;
-}
-.index-layout .index-top a {
+.top-clubs a {
   font-size: 1rem;
 }
-.index-layout .index-top .top-info {
+.top-clubs .top-info {
   color: #364035;
   font-size: 0.75rem;
 }
-.index-layout .index-top .top-link-all {
+.top-clubs .top-link-all {
   padding: 1rem 0;
 }

@@ -1,94 +1,51 @@
 <% extend 'layout' %>
 
-<div class="login-panel">
-	<div class="login-box">
-		<form method="post" action="/auth/prihlaseni">
-			<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
-			<div class="form-group row">
-				<label for="login-nickname" class="col-sm-3 form-control-label">
-					<small>Jméno:</small>
-				</label>
-				<div class="col-sm-9 login-control">
-					<input type="text" id="login-nickname" name="username" class="form-control form-control-sm" />
-				</div>
-			</div>
-			<div class="form-group row">
-				<label for="login-password" class="col-sm-3 form-control-label">
-					<small>Heslo:</small>
-				</label>
-				<div class="col-sm-9 login-control">
-					<input type="password" id="login-password" name="password" class="form-control form-control-sm"/>
-				</div>
-			</div>
-			<div class="form-group row">
-				<div class="col-sm-offset-3 col-sm-9 login-control">
-					<button type="submit" class="btn btn-secondary btn-sm">Vstoupit!</button>
-				</div>
-			</div>
-		</form>
-	</div>
-
-	<div class="lapiduch-info">
-		Vítejte na diskusním serveru Lapiduch. Pokud jste tu noví a nevíte se s něčím rady, je tu pro Vás připraven klub Začátečníci na Lapiduchu. Někdy se Vám mohou hodit kluby Chyby, Potéže s hesly, FAQ, Ikonky či Návrhy a stížnosti. Rozhodně Vám doporučujeme si do oblíbených klubů zařadit a navštěvovat Novinky, kde se dozvíte o chystaných či provedených změnách na tomto diskuzním serveru.
-	</div>
-</div>
-
-<div class="action-panel">
-	<ul>
-		<li>
-			<a href="/registrace">Nový uživatel</a>
-		</li>
-		<li>
-			<a href="/faq">FAQ</a>
-		</li>
-		<li>
-			<a href="/navod">Návod</a>
-		</li>
-		<li>
-			<a href="/pritomni">Přítomní</a>
-		</li>
-		<li>
-			<a href="/novy-klub">Založit nový klub</a>
-		</li>
-		<li>
-			<a href="/odhlasit">Odhlásit</a>
-		</li>
-	</ul>
-</div>
-
-<div class="index-layout ">
-
-
-	<div class="index-clubs">
-		<div class="index-clubs-header">
-			Kategorie
+<div class="section section-index">
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
 		</div>
-		<% include 'partials/categories-list' %>
+
+		<div class="top-panel-right">
+			Vítejte na diskusním serveru Lapiduch. Pokud jste tu noví a nevíte se s něčím rady, je tu pro Vás připraven klub Začátečníci na Lapiduchu. Někdy se Vám mohou hodit kluby Chyby, Potéže s hesly, FAQ, Ikonky či Návrhy a stížnosti. Rozhodně Vám doporučujeme si do oblíbených klubů zařadit a navštěvovat Novinky, kde se dozvíte o chystaných či provedených změnách na tomto diskuzním serveru.
+		</div>
 	</div>
 
-	<div class="index-top container-fluid">
-		<div class="row">
-			<div class="top-column col-md-4">
-				<div class="top-header">Nejnavštěvovanější klub</div>
-				<% include 'partials/top-clubs-list' %>
-				<div class="top-link-all">
-					<a href="/">Celé pořadí...</a>
-				</div>
-			</div>
+	<% include 'partials/action-panel' %>
 
-			<div class="top-column col-md-4">
-				<div class="top-header">Nejpřispívanější klub</div>
-				<% include 'partials/top-clubs-list' %>
-				<div class="top-link-all">
-					<a href="/">Celé pořadí...</a>
-				</div>
-			</div>
+	<div class="content">
 
-			<div class="top-column col-md-4">
-				<div class="top-header">Nejnovější klub</div>
-				<% include 'partials/top-clubs-list' %>
-				<div class="top-link-all">
-					<a href="/">Celé pořadí...</a>
+
+		<div class="content-left">
+			<% include 'partials/categories-list' %>
+		</div>
+
+		<div class="content-right">
+			<div class="top-clubs container-fluid">
+				<div class="row">
+					<div class="top-column col-md-4">
+						<div class="simple-heading">Nejnavštěvovanější klub</div>
+						<% include 'partials/top-clubs-list' %>
+						<div class="top-link-all">
+							<a href="/">Celé pořadí...</a>
+						</div>
+					</div>
+
+					<div class="top-column col-md-4">
+						<div class="simple-heading">Nejpřispívanější klub</div>
+						<% include 'partials/top-clubs-list' %>
+						<div class="top-link-all">
+							<a href="/">Celé pořadí...</a>
+						</div>
+					</div>
+
+					<div class="top-column col-md-4">
+						<div class="simple-heading">Nejnovější klub</div>
+						<% include 'partials/top-clubs-list' %>
+						<div class="top-link-all">
+							<a href="/">Celé pořadí...</a>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

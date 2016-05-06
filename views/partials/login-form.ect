@@ -1,0 +1,26 @@
+<form method="post" action="/auth/prihlaseni" class="login-form">
+	<div class="container">
+		<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
+		<div class="form-group row row-no-padding">
+			<label for="login-nickname" class="col-sm-3 form-control-label">
+				Jméno:
+			</label>
+			<div class="col-sm-9 login-control">
+				<input type="text" id="login-nickname" name="username" class="form-control form-control-sm" />
+			</div>
+		</div>
+		<div class="form-group row row-no-padding">
+			<label for="login-password" class="col-sm-3 form-control-label">
+				Heslo:
+			</label>
+			<div class="col-sm-9 login-control">
+				<input type="password" id="login-password" name="password" class="form-control form-control-sm"/>
+			</div>
+		</div>
+		<div class="form-group row row-no-padding">
+			<div class="col-sm-offset-3 col-sm-9 login-control">
+				<button type="submit" class="btn btn-secondary btn-sm">Vstoupit!</button>
+			</div>
+		</div>
+	</div>
+</form>
