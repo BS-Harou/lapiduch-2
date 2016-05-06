@@ -1,0 +1,23 @@
+<div class="categories-table">
+	<table class="table table-sm table-striped">
+	<thead>
+	<tr>
+		<th>Název kategorie (počet klubů)</th>
+		<th>Správce kategorie</th>
+	</tr>
+	</thead>
+	<tbody>
+	<% for cat in @categoriesList : %>
+		<tr>
+			<td>
+				<a href="/kategorie/<%= cat.link %>"><%= cat.name %></a>
+			</td>
+			<td>
+				<a href="/posta?pro=xxx">admin</a>
+			</td>
+		</tr>
+	<% end %>
+	</tbody>
+	</table>
+</div>
+

@@ -1,12 +1,13 @@
 <% extend 'layout' %>
 
-<div class="section section-signup">
+<section class="section section-signup">
 
 	<div class="top-panel">
 		<div class="top-panel-left"></div>
 
 		<div class="top-panel-right">
-			Podminky sem, podminky tam.
+			<p class="no-indent">Registrujte se jen tehdy, souhlasíte-li se všemi pravidly diskusního serveru Lapiduch.</p>
+			<p class="no-indent">Registraci je potřeba potvrdit kliknutím na odkaz v e-mailu. Je proto nutné uvést pravdivý a funkční e-mail.</p>
 		</div>
 	</div>
 
@@ -16,61 +17,11 @@
 			<% if @success : %>
 			Uspesna registrace, mrkni na mail
 			<% else : %>
-			<form method="post" action="/auth/registrace">
-				<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
-				<div class="container">
-					<div class="form-group row">
-						<label for="signup-username" class="col-sm-3 form-control-label">
-							<small>Uživatelské jméno:</small>
-						</label>
-						<div class="col-sm-9">
-							<input type="text" id="signup-username" name="username" class="form-control form-control-sm" />
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="signup-password" class="col-sm-3 form-control-label">
-							<small>Heslo:</small>
-						</label>
-						<div class="col-sm-9">
-							<input type="password" id="signup-password" name="password" class="form-control form-control-sm"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="signup-confirm-password" class="col-sm-3 form-control-label">
-							<small>Znovu heslo:</small>
-						</label>
-						<div class="col-sm-9">
-							<input type="password" id="signup-confirm-password" name="confirmPassword" class="form-control form-control-sm"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="signup-email" class="col-sm-3 form-control-label">
-							<small>E-Mail:</small>
-						</label>
-						<div class="col-sm-9">
-							<input type="email" id="signup-email" name="email" class="form-control form-control-sm"/>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="signup-sex" class="col-sm-3 form-control-label">
-							<small>Pohlaví:</small>
-						</label>
-						<div class="col-sm-9">
-							<select id="signup-sex" name="sex" class="form-control form-control-sm">
-								<option value="male">Muž</option>
-								<option value="female">Žena</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-sm-offset-3 col-sm-9 login-control">
-							<button type="submit" class="btn btn-secondary btn-sm">Registrovat se</button>
-						</div>
-					</div>
-				</div>
-			</form>
-			
+				<% if @errorMessage : %>
+					<p color="red"><%= @errorMessage %></p>
+				<% end %>
+			<% include 'partials/signup-form' %>
 			<% end %>
 		</div>
 	</div>
-</div>
+</section>

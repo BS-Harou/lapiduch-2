@@ -1,0 +1,25 @@
+cloudinary:
+  cloud_name: 'lapiduch'
+  api_key: ''
+  api_secret: ''
+max_avatar_size: 500000
+mail:
+  smtp: 'smtps://user@gmail.com:pass@smtp.gmail.com'
+  from: 'Lapiduch <noreply@lapiduch.cz>'
+mongo:
+  user: ''
+  pass: ''
+  host: 'mongodb://localhost:27017/lapiduch'
+redis:
+  user: ''
+  pass: ''
+  host: ''
+sessions:
+  secret: 'keyboard cat'
+admin:
+  username: 'admin'
+  password: 'admin'
+  email: 'admin@lapiduch.cz'
+crypto:
+  digest: 'sha256'
+  iterations: 10000

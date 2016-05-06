@@ -11,6 +11,9 @@ a {
   text-decoration: none;
   color: #530002;
 }
+a:hover {
+  color: #950004;
+}
 header {
   background: #9baad1;
   border-bottom: 2px solid #555;
@@ -33,8 +36,12 @@ header a {
   color: #002f06;
   font-weight: bold;
 }
-header li:first-of-type a {
+header li.highlighted-item a {
   color: #fd0015;
+}
+.simple-heading {
+  margin-bottom: 1rem;
+  white-space: nowrap;
 }
 #logo-panel {
   background: #6f96d1;
@@ -46,6 +53,10 @@ header li:first-of-type a {
 .row-no-padding > [class*="col-"] {
   padding-left: 0 !important;
   padding-right: 0 !important;
+}
+.no-indent {
+  padding: 0;
+  margin: 0;
 }
 /**
  * Top panel
@@ -84,6 +95,27 @@ header li:first-of-type a {
   padding-right: 0.3rem !important;
 }
 /**
+ * Content
+ */
+.content {
+  display: flex;
+}
+.content .content-left {
+  background: #e8edf1;
+  border-top-left-radius: 1rem;
+  flex: 0 0 auto;
+  width: 15rem;
+  padding: 1rem;
+}
+.content .content-right {
+  flex: 1 1 auto;
+  padding: 1rem 3rem 5rem 3rem;
+}
+.content .content-single {
+  flex: 1 1 auto;
+  padding: 1rem 0.3rem;
+}
+/**
  * Action panel
  */
 .action-panel {
@@ -110,29 +142,6 @@ header li:first-of-type a {
   font-weight: bold;
 }
 /**
- * Content
- */
-.simple-heading {
-  margin-bottom: 1rem;
-  white-space: nowrap;
-}
-.content {
-  display: flex;
-}
-.content .content-left {
-  background: #e8edf1;
-  border-top-left-radius: 1rem;
-  flex: 0 0 auto;
-  min-height: 100%;
-  width: 15rem;
-  padding: 1rem;
-}
-.content .content-right {
-  flex: 1 1 auto;
-  min-height: 100%;
-  padding: 1rem 3rem 5rem 3rem;
-}
-/**
  * Categories list
  */
 .categories-list .simple-heading {
@@ -156,6 +165,17 @@ header li:first-of-type a {
   font-size: 0.625rem;
 }
 /**
+ * Categories table
+ */
+.categories-table {
+  width: 35rem;
+  margin: 0 auto;
+}
+.categories-table td,
+.categories-table th {
+  line-height: 1.2;
+}
+/**
  * Top clubs
  */
 .top-clubs li {
@@ -171,4 +191,31 @@ header li:first-of-type a {
 }
 .top-clubs .top-link-all {
   padding: 1rem 0;
+}
+/**
+ * Sign up
+ */
+.signup-form {
+  width: 30rem;
+}
+/**
+ * Clubs table
+ */
+.clubs-table {
+  font-size: 0.8125rem;
+  padding-right: 2rem;
+}
+.clubs-table .table-sm td,
+.clubs-table .table-sm th {
+  padding: 0.2rem 0.3rem;
+}
+.clubs-table td,
+.clubs-table th {
+  line-height: normal;
+}
+.clubs-table a {
+  font-weight: bold;
+}
+.clubs-table .posts-amount {
+  text-align: right;
 }

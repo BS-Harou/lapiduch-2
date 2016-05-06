@@ -1,3 +1,5 @@
+global.__base = __dirname + '/'
+
 express = require('express')
 assert = require 'assert'
 path = require('path')
@@ -7,27 +9,35 @@ cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 session = require('express-session')
 passport = require('passport')
-LocalStrategy = require('passport-local').Strategy
 helmet = require('helmet')
 csurf = require('csurf')
 
-routes = require('./routes/index')
-auth = require('./routes/auth')
+routes =
+	index: require('./routes/index')
+	auth: require('./routes/auth')
+	settings: require('./routes/settings')
+	categories: require('./routes/categories')
 app = express()
+
+settings = require(__base + 'services/settings').getSettings()
 
 #
 # TEMPLATES
 #
 ECT = require 'ect'
-ectRenderer = ECT(watch: true, root: __dirname + '/views', ext: '.ect');
+ectRenderer = ECT(watch: true, root: __dirname + '/views', ext: '.ect')
+
+#
+# CLOUDINARY
+#
+require './configs/cloudinary-config'
 
 #
 # MongoDB
 #
 
 MongoClient = require('mongodb').MongoClient
-ObjectID = require('mongodb').ObjectID
-url = 'mongodb://localhost:27017/lapiduch'
+url = settings.mongo.host
 global.mongodb = mongodb = null
 
 MongoClient.connect url, (err, db) ->
@@ -40,40 +50,14 @@ MongoClient.connect url, (err, db) ->
 	return
 
 
-#
-# PASSPORT
-#
-# userMap = {}
-# userMap['1'] = { id: 1, username: 'Len_y' }
-passport.use new LocalStrategy (username, password, done) ->
-	collection = mongodb.collection 'users'
-	collection.findOne { username: username }, (err, user) ->
-		return done err  if err
-		return done null, false, message: 'Incorrect username.' unless user
-		return done null, false, message: 'Incorrect password.' unless user.password is password
-		return done null, user
-	return
-
-passport.serializeUser (user, done) ->
-	done null, user._id.toHexString()
-
-passport.deserializeUser (id, done) ->
-	binId = ObjectID.createFromHexString(id)
-
-	collection = mongodb.collection 'users'
-	collection.findOne { _id: binId }, (err, user) ->
-		return done err  if err
-		# TODO, user is null
-		return done null, user
-	return
-
+require(__base + 'configs/passport-config') passport
 
 # view engine setup
-app.set 'views', path.join(__dirname, 'views')
+app.set 'views', path.join(__base, 'views')
 app.set 'view engine', 'ect'
 app.engine 'ect', ectRenderer.render
 # TODO get lapiduch favicon
-#app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+#app.use(favicon(path.join(__base, 'public', 'favicon.ico')));
 app.use helmet()
 app.use helmet.contentSecurityPolicy
   directives: 
@@ -88,16 +72,17 @@ app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
-app.use require('stylus').middleware(path.join(__dirname, 'public'))
-app.use express.static(path.join(__dirname, 'public'))
-# TODO, move secret and name to env config
-app.use session({ secret: 'keep scrolling', resave: false, saveUninitialized: false, name: 'sesna' })
+app.use require('stylus').middleware(path.join(__base, 'public'))
+app.use express.static(path.join(__base, 'public'))
+app.use session({ secret: settings.sessions.secret, resave: false, saveUninitialized: false, name: 'sesna' })
 app.use passport.initialize()
 app.use passport.session()
 app.use csurf()
-app.use '/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/')
-app.use '/', routes
-app.use '/auth', auth
+app.use '/bootstrap', express.static(__base + '/node_modules/bootstrap/dist/')
+app.use '/', routes.index
+app.use '/auth', routes.auth
+app.use '/nastaveni', routes.settings
+app.use '/kategorie', routes.categories
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

@@ -7,7 +7,9 @@ categories =
 		collection.find({}).toArray (err, cats) ->
 			assert.equal null, err
 			if typeof cb is 'function'
-				cb cats.map (cat) -> cat.name 
+				cb cats.map (cat) ->
+					name: cat.name 
+					link: cat.name.replace(/\s/g, '-').toLowerCase()
 			return
 		return
 

@@ -1,5 +1,6 @@
 express = require 'express'
 router = express.Router()
+users = require __base + 'collections/users'
 
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy;
@@ -11,10 +12,9 @@ router.get '/registrace', (req, res, next) ->
 
 # GET users listing
 router.post '/registrace', (req, res, next) ->
-	collection = mongodb.collection 'users'
-	collection.insert [req.body], (err) ->
-		return next err if err
-		res.render 'signup', { title: 'Registrace', success: yes }
+	users.createUserFromForm req.body, (err) ->
+		console.log 'ERR: ', err
+		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString(), csrfToken: req.csrfToken() }
 	return
 
 router.get '/odhlasit', (req, res) ->

@@ -9,6 +9,9 @@ body
 a
 	text-decoration: none
 	color: #530002;
+	
+a:hover
+	color: #950004
 
 header
 	background: rgb(155, 170, 209)
@@ -29,9 +32,12 @@ header
 		color: rgb(0, 47, 6)
 		font-weight: bold
 	
-	li:first-of-type a
+	li.highlighted-item a
 		color: rgb(253, 0, 21)
 		
+.simple-heading
+	margin-bottom: 1rem
+	white-space: nowrap
 		
 #logo-panel
 	background: rgb(111, 150, 209)
@@ -43,6 +49,11 @@ header
 .row-no-padding > [class*="col-"]
 	padding-left: 0 !important
 	padding-right: 0 !important
+	
+.no-indent {
+	padding: 0;
+	margin: 0;
+}
 
 
 /**
@@ -66,7 +77,6 @@ header
 		padding: 0.5rem
 		background: rgb(232, 237, 241)
 			
-		
 /**
  * Login form
  */
@@ -82,11 +92,31 @@ header
 		font-size: 0.9rem
 		padding-right: 0.3rem !important
 		
+/**
+ * Content
+ */
+.content
+	display: flex
+	
+	.content-left
+		background: rgb(232, 237, 241)
+		border-top-left-radius: 1rem
+		flex: 0 0 auto
+		width: 15rem
+		padding: 1rem
+		
+	.content-right
+		flex: 1 1 auto
+		padding: 1rem 3rem 5rem 3rem
+		
+	.content-single
+		flex: 1 1 auto
+		padding: 1rem 0.3rem
+		
 
 /**
  * Action panel
  */
- 
 .action-panel
 	background: linear-gradient(to bottom, rgb(155, 170, 209) 0%, rgb(190, 207, 235) 0.5rem, rgb(190, 207, 235) calc(100% - 0.5rem), rgb(155, 170, 209) 100%)
 	margin-bottom: 0.2rem
@@ -107,29 +137,6 @@ header
 	a
 		color: rgb(0, 47, 6)
 		font-weight: bold
-	
-/**
- * Content
- */
-.simple-heading
-	margin-bottom: 1rem
-	white-space: nowrap
-			
-.content
-	display: flex
-	
-	.content-left
-		background: rgb(232, 237, 241)
-		border-top-left-radius: 1rem
-		flex: 0 0 auto
-		min-height: 100%
-		width: 15rem
-		padding: 1rem
-		
-	.content-right
-		flex: 1 1 auto
-		min-height: 100%
-		padding: 1rem 3rem 5rem 3rem
 			
 /**
  * Categories list
@@ -154,6 +161,15 @@ header
 		font-size: 0.625rem
 		
 /**
+ * Categories table
+ */
+.categories-table
+	width: 35rem
+	margin: 0 auto
+	td, th
+		line-height: 1.2
+		
+/**
  * Top clubs
  */
 .top-clubs
@@ -170,3 +186,28 @@ header
 
 	.top-link-all
 		padding: 1rem 0
+		
+/**
+ * Sign up
+ */
+.signup-form
+	width: 30rem
+	
+/**
+ * Clubs table
+ */
+.clubs-table
+	font-size: 0.8125rem
+	padding-right: 2rem
+	
+	.table-sm td, .table-sm th
+		padding: .2rem .3rem
+		
+	td, th
+		line-height: normal
+		
+	a
+		font-weight: bold
+	
+	.posts-amount
+		text-align: right

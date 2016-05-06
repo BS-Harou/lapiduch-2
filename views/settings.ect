@@ -1,0 +1,24 @@
+<% extend 'layout' %>
+
+<section class="section-signup">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent">Nastavení uživatele <b><%= @user?.username %></b>.</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-left"></div>
+		<div class="content-right">
+			<form action="/nastaveni/avatar?_csrf=<%= @csrfToken %>" method="post" enctype="multipart/form-data">
+				<input type="file" name="avatar" /> Vybrat ikonku
+				<button type="submit">Nahrát</button>
+			</form>
+		</div>
+	</div>
+</section>

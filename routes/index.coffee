@@ -8,12 +8,14 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 # GET home page
 router.get '/', (req, res, next) ->
 	require('../collections/categories').getAllCategories (categoriesList) ->
-		res.render 'index', {
-			title: 'Express'
+		params =
+			title: 'Index'
 			topList: topList
 			categoriesList: categoriesList
 			csrfToken: req.csrfToken()
-		}
+		if req.user
+			params.user = username: req.user.username, avatar: req.user.avatar
+		res.render 'index', params
 
 
 module.exports = router

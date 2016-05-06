@@ -1,8 +1,24 @@
 - Redis store for sessions
-- MongoDB for otehr persistent stuff
 - Responsive page
 - passport fb/tw/g auth
 - split app.coffee
-- CSRF form protection
 - Google "I am not a robot" captcha for signup
 - DB init skript (default categories, admin user (conf name), all docs)
+- Use default yaml config when its not present in custom yaml config
+- http://cloudinary.com/ for avatars
+- Mongoose vs native mongod driver?
+- Check why multer after csrf is a problem
+- Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
+- Fill form items when form is returne invalid
+- Add content-single instad of single content-right (kategorie, kluby)
+- Remove diacritics and otehr special characters from category/club links
+
+
+set DEBUG=myapp:* & coffee --nodejs --debug ./bin/www
+
+
+
+PERF/SECURITY:
+- Mongo indicies (username, email)
+- throttle avatar uploads
+- avatar change limit (10x a day or so)

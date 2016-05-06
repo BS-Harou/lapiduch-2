@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-	<title><%= @title %></title>
+	<title>Lapiduch - <%= @title %></title>
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="/stylesheets/style.css" />
 	
@@ -9,20 +9,55 @@
 <body>
 	<header>
 		<nav>
+			<% if @user : %>
 			<ul>
 				<li>
+					<a href="/posta">Pošta</a>
+				</li>
+				<li>
+					<a href="/nastaveni">Nastavení</a>
+				</li>
+				<li>
+					<a href="/hledani">Hledání</a>
+				</li>
+				<li>
+					<a href="/kategorie">Kategorie</a>
+				</li>
+				<li>
+					<a href="/kluby">Kluby</a>
+				</li>
+				<li>
+					<a href="/pritomni">Přítomní</a>
+				</li>
+				<li>
+					<a href="/oblibene">Oblíbené</a>
+				</li>
+				<li>
+					<a href="/">Lapiduch</a>
+				</li>
+				<li>
+					<a href="/auth/odhlasit">Odhlásit</a>
+				</li>
+			</ul>
+			<% else : %>
+			<ul>
+				<li class="highlighted-item">
 					<a href="/auth/registrace">Registrace</a>
 				</li>
 				<li>
 					<a href="/navod">Návod</a>
 				</li>
 				<li>
+					<a href="/kategorie">Kategorie</a>
+				</li>
+				<li>
 					<a href="/kluby">Kluby</a>
 				</li>
 				<li>
-					<a href="/">Lapiduch.cz</a>
+					<a href="/">Lapiduch</a>
 				</li>
 			</ul>
+			<% end %>
 		</nav>
 	</header>
 	<div id="logo-panel">
