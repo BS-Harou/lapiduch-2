@@ -6,10 +6,12 @@ max_avatar_size: 500000
 mail:
   smtp: 'smtps://user@gmail.com:pass@smtp.gmail.com'
   from: 'Lapiduch <noreply@lapiduch.cz>'
-mongo:
+postgre:
+  host: 'localhost'
+  port: 5432,
+  database: 'lapiduch'
   user: ''
-  pass: ''
-  host: 'mongodb://localhost:27017/lapiduch'
+  password: ''
 redis:
   user: ''
   pass: ''

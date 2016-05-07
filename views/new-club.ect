@@ -1,0 +1,43 @@
+<% extend 'layout' %>
+
+<section class="section section-new-club">
+
+	<div class="top-panel">
+		<div class="top-panel-left"></div>
+
+		<div class="top-panel-right">
+			<p class="no-indent"><b>Založení nového diskusního klubu</b></p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-single">
+			<form method="post" action="/novy-klub" class="new-club-form">
+				<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
+				<div class="container">
+					<div class="form-group row">
+						<label for="club-name" class="col-sm-4 form-control-label">
+							<small>Název klubu:</small>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" id="club-name" name="clubName" class="form-control form-control-sm" required pattern=".{3,50}" maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="club-desc" class="col-sm-4 form-control-label">
+							<small>Popis klubu:</small>
+						</label>
+						<div class="col-sm-8">
+							<input type="text" id="club-desc" name="clubDesc" class="form-control form-control-sm" required pattern=".{3,50}" maxlength="50" />
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-sm-offset-4 col-sm-8 login-control">
+							<button type="submit" class="btn btn-secondary btn-sm">Vytvořit</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>

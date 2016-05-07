@@ -6,14 +6,16 @@
 - DB init skript (default categories, admin user (conf name), all docs)
 - Use default yaml config when its not present in custom yaml config
 - http://cloudinary.com/ for avatars
-- Mongoose vs native mongod driver?
+- One postgre connectio? (pg-promise github)
 - Check why multer after csrf is a problem
 - Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
 - Fill form items when form is returne invalid
 - Add content-single instad of single content-right (kategorie, kluby)
 - Remove diacritics and otehr special characters from category/club links
+- created_at bigint -> timestamp
+- use ENV vars in yaml settings for db connects
 
-
+set NODE_TLS_REJECT_UNAUTHORIZED=0
 set DEBUG=myapp:* & coffee --nodejs --debug ./bin/www
 
 

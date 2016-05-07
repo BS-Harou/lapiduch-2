@@ -17,6 +17,7 @@ routes =
 	auth: require('./routes/auth')
 	settings: require('./routes/settings')
 	categories: require('./routes/categories')
+	newClub: require('./routes/new-club')
 app = express()
 
 settings = require(__base + 'services/settings').getSettings()
@@ -36,18 +37,7 @@ require './configs/cloudinary-config'
 # MongoDB
 #
 
-MongoClient = require('mongodb').MongoClient
-url = settings.mongo.host
-global.mongodb = mongodb = null
-
-MongoClient.connect url, (err, db) ->
-	assert.equal null, err
-	console.log 'Connected to mongo server'
-	db.on 'close', ->
-		mongodb = null
-		console.log 'Disconnected from mongo server'
-	global.mongodb = mongodb = db
-	return
+global.db = db = require __base + 'configs/postgre-config'
 
 
 require(__base + 'configs/passport-config') passport
@@ -83,6 +73,7 @@ app.use '/', routes.index
 app.use '/auth', routes.auth
 app.use '/nastaveni', routes.settings
 app.use '/kategorie', routes.categories
+app.use '/novyklub', routes.newClub
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

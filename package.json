@@ -22,12 +22,12 @@
     "express-session": "^1.13.0",
     "helmet": "^2.0.0",
     "js-yaml": "^3.6.0",
-    "mongodb": "^2.1.18",
     "morgan": "~1.6.1",
     "multer": "^1.1.0",
     "nodemailer": "^2.3.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "pg-promise": "^4.0.8",
     "serve-favicon": "~2.3.0",
     "stylus": "0.42.3"
   },

@@ -17,14 +17,15 @@ users =
 		return
 
 	loginUser: (username, password, done) ->
-		collection = mongodb.collection 'users'
-		collection.findOne { $or: [{username: username}, {email: username }]}, (err, user) ->
-			return done err  if err
-			return done null, false, message: 'Asi neexistujici user' unless user # TODO, user neexistuje nebo se pokazilo neco jineho?
+		db.one("SELECT * FROM users WHERE username=${username} OR email=${username}", { username: username })
+		.then (user) ->
+			return done null, false, message: 'Neexistujici uzivatel' unless user
 			pass = security.hash password, user.salt, (err, hash) ->
 				return done null, false, message: 'Incorrect password.' unless user.password is hash
 				return done null, user
 			return
+		.catch (err) ->
+			return done err
 		return
 
 	###*
@@ -64,13 +65,18 @@ users =
 				createdAt: Date.now()
 				perm: userData.perm or PERM.USER
 
-			collection = mongodb.collection 'users'
-			collection.insert [user], (err) ->
-				return cb err if err and cb
+			db.none("""
+				INSERT INTO users (username, email, password, salt, sex, created_at, perm)
+				VALUES(${username}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm})
+			""", user)
+			.then ->
 				mail.sendAuthMail user.email, (err) ->
 					return unless typeof cb is 'function'
 					return cb err if err
 					cb null
+				return
+			.catch (err) ->
+				return cb err if cb
 			return
 		return
 
@@ -80,12 +86,13 @@ users =
 		@param {function} cb
 	###
 	uploadAvatar: (buffer, user, cb) ->
+		# TODO handle errors (e.g.  interrupted stream upload)
 		cloudinaryStream = cloudinary.uploader.upload_stream (result) -> 
-			# TODO handle errors (e.g.  interrupted stream upload)
-			collection = mongodb.collection 'users'
-			collection.updateOne { "_id" : user._id }, { $set: { "avatar": result.url } }, (err, results) ->
-				cb err if err
+			db.none("UPDATE users SET avatar=${avatar} WHERE id=${userId}", { userId: user.id, avatar: result.url })
+			.then ->
 				cb null, result
+			.catch (err) ->
+				return cb err
 			return
 		, public_id: user.username
 

@@ -1,5 +1,3 @@
-ObjectID = require('mongodb').ObjectID
-
 LocalStrategy = require('passport-local').Strategy
 users = require __base + 'collections/users'
 
@@ -10,14 +8,13 @@ module.exports = (passport) ->
 		return
 
 	passport.serializeUser (user, done) ->
-		done null, user._id.toHexString()
+		done null, user.id
 
 	passport.deserializeUser (id, done) ->
-		binId = ObjectID.createFromHexString(id)
-
-		collection = mongodb.collection 'users'
-		collection.findOne { _id: binId }, (err, user) ->
-			return done err  if err
-			# TODO, user is null
+		# TODO User users collection to get use by id
+		db.one("SELECT * FROM users WHERE id=${userId}", { userId: id })
+		.then (user) ->
 			return done null, user
+		.catch (err) ->
+			return done err if err
 		return
