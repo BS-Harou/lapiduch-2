@@ -55,7 +55,8 @@ onListening = ->
 # Get port from environment and store in Express.
 ###
 
-port = normalizePort(process.env.PORT or '4815')
+ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT or process.env.PORT or '4815')
 
 app.set 'port', port
 
@@ -69,6 +70,6 @@ server = http.createServer(app)
 # Listen on provided port, on all network interfaces.
 ###
 
-server.listen port
+server.listen port, ip
 server.on 'error', onError
 server.on 'listening', onListening
