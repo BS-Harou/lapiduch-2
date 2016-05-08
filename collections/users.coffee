@@ -70,11 +70,15 @@ users =
 				VALUES(${username}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm})
 			""", user)
 			.then ->
+				return cb null
+				# TODO
+				###
 				mail.sendAuthMail user.email, (err) ->
 					return unless typeof cb is 'function'
 					return cb err if err
 					cb null
 				return
+				###
 			.catch (err) ->
 				return cb err if cb
 			return

@@ -5,7 +5,6 @@
 - Google "I am not a robot" captcha for signup
 - DB init skript (default categories, admin user (conf name), all docs)
 - Use default yaml config when its not present in custom yaml config
-- http://cloudinary.com/ for avatars
 - One postgre connectio? (pg-promise github)
 - Check why multer after csrf is a problem
 - Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
@@ -14,6 +13,8 @@
 - Remove diacritics and otehr special characters from category/club links
 - created_at bigint -> timestamp
 - use ENV vars in yaml settings for db connects
+- Don't show "- Index" in title on lapiduch index route
+- Global template params (user, csfr)
 
 set NODE_TLS_REJECT_UNAUTHORIZED=0
 set DEBUG=myapp:* & coffee --nodejs --debug ./bin/www
@@ -24,3 +25,20 @@ PERF/SECURITY:
 - Mongo indicies (username, email)
 - throttle avatar uploads
 - avatar change limit (10x a day or so)
+
+
+
+TICKETS:
+- Update restart-db script and figure out how to run it on openshift
+- Openshift db ui
+- Openshift db info in yaml files
+- Local and openshift redis for sessions
+- New club
+- Club section
+- Favorites
+- Mail
+- Openshift SSL
+- Auth email
+- Top lists day aggregations
+- Category list aggregations
+- Search

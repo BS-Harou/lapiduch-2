@@ -7,7 +7,8 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 
 # GET home page
 router.get '/', (req, res, next) ->
-	require('../collections/categories').getAllCategories (categoriesList) ->
+	require('../collections/categories').getAllCategories (err, categoriesList) ->
+		next err if err
 		params =
 			title: 'Index'
 			topList: topList

@@ -4,8 +4,9 @@ categories =
 	getAllCategories: (cb) ->
 		db.query('SELECT * FROM categories')
 		.then (cats) ->
+			console.log 'CATS: ', cats
 			if typeof cb is 'function'
-				cb cats.map (cat) ->
+				cb null, cats.map (cat) ->
 					name: cat.name 
 					link: cat.name.replace(/\s/g, '-').toLowerCase()
 			return
