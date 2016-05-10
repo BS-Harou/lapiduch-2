@@ -64,24 +64,33 @@ users =
 				sex: userData.sex
 				createdAt: Date.now()
 				perm: userData.perm or PERM.USER
+				activate: security.hashString to
 
 			db.none("""
-				INSERT INTO users (username, email, password, salt, sex, created_at, perm)
-				VALUES(${username}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm})
+				INSERT INTO users (username, email, password, salt, sex, created_at, perm, activate)
+				VALUES(${username}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm}, ${activate})
 			""", user)
 			.then ->
 				return cb null
-				# TODO
-				###
-				mail.sendAuthMail user.email, (err) ->
+				mail.sendAuthMail user.email, user.activate, (err) ->
 					return unless typeof cb is 'function'
 					return cb err if err
 					cb null
 				return
-				###
 			.catch (err) ->
 				return cb err if cb
 			return
+		return
+
+	###*
+		@param {string} activate
+	###
+	users.activateUser (activate, cb) ->
+		db.none("UPDATE users SET activate='' WHERE activate=$1", activate)
+		.then ->
+			return cb() if cb
+		.catch (err ->
+			return cb err if cb
 		return
 
 	###*

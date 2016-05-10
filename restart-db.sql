@@ -32,6 +32,7 @@ CREATE TABLE public.users (
   avatar character varying(64),
   sex character varying(16),
   created_at bigint,
+  activate character varying(64),
   CONSTRAINT users_pk PRIMARY KEY (id),
   CONSTRAINT users_email_uq UNIQUE (email),
   CONSTRAINT users_username_uq UNIQUE (username)

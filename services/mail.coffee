@@ -15,14 +15,17 @@ mail =
 		return
 
 	# TODO util to get absolute lapiduch url, use actual working url
-	sendAuthMail: (to, cb) ->
+	sendAuthMail: (to, activate, cb) ->
+
+		link = "#{settings.url}/auth/activate/#{activate}"
+
 		mailOptions =
 			from: settings.mail.from
 			to: to
 			subject: 'Lapiduch - Potvrzení registrace'
 			text: """
 				Děkujeme za registraci na diskuzním serveru lapiduch.cz. Potvrďte prosím svou registraci kliknutím na následující odkaz:\n\n
-				http://www.lapiduch.cz?activate=#{hashString(to)}
+				#{hashString(link)}
 			"""
 		@sendMail mailOptions, cb
 		return

@@ -4,7 +4,7 @@ cloudinary:
   api_secret: ''
 max_avatar_size: 500000
 mail:
-  smtp: 'smtps://user@gmail.com:pass@smtp.gmail.com'
+  smtp: 'smtps://user%40gmail.com:pass@smtp.gmail.com'
   from: 'Lapiduch <noreply@lapiduch.cz>'
 postgre:
   host: 'localhost'
@@ -25,3 +25,4 @@ admin:
 crypto:
   digest: 'sha256'
   iterations: 10000
+url: 'http://app-lapiduch.rhcloud.com/'

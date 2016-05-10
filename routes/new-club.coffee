@@ -3,7 +3,7 @@ router = express.Router()
 
 
 router.get '/', (req, res, next) ->
-	return next() unless req.user
+	return next new Error 'Nejste prihlaseni' unless req.user
 	params =
 		title: 'Nový klub'
 		csrfToken: req.csrfToken()

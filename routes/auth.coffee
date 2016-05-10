@@ -17,6 +17,13 @@ router.post '/registrace', (req, res, next) ->
 		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString(), csrfToken: req.csrfToken() }
 	return
 
+# GET users listing
+router.post '/activate/:activate', (req, res, next) ->
+	users.activateUser req.something, (err) ->
+		console.log 'ERR: ', err
+		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString(), csrfToken: req.csrfToken() }
+	return
+
 router.get '/odhlasit', (req, res) ->
   req.logout()
   res.redirect '/'
