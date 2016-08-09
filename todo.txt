@@ -29,9 +29,9 @@ PERF/SECURITY:
 
 
 TICKETS:
-- Update restart-db script and figure out how to run it on openshift
-- Openshift db ui
-- Openshift db info in yaml files
+- Update restart-db script and figure out how to run it on openshift (rhc portforwading works awesomely)
+- Openshift db ui (rhc portforwarding and pgadmin)
+- Openshift db info in yaml files (hand written parser of yaml strings)
 - Local and openshift redis for sessions
 - New club
 - Club section

@@ -13,7 +13,7 @@ postgre:
   user: ''
   password: ''
 redis:
-  user: ''
+  port: ''
   pass: ''
   host: ''
 sessions:

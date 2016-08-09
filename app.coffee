@@ -8,6 +8,7 @@ logger = require('morgan')
 cookieParser = require('cookie-parser')
 bodyParser = require('body-parser')
 session = require('express-session')
+RedisStore = require('connect-redis')(session)
 passport = require('passport')
 helmet = require('helmet')
 csurf = require('csurf')
@@ -64,7 +65,13 @@ app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
 app.use require('stylus').middleware(path.join(__base, 'public'))
 app.use express.static(path.join(__base, 'public'))
-app.use session({ secret: settings.sessions.secret, resave: false, saveUninitialized: false, name: 'sesna' })
+app.use session({
+	store: new RedisStore settings.redis
+	secret: settings.sessions.secret
+	resave: false
+	saveUninitialized: false
+	name: 'sesna' 
+})
 app.use passport.initialize()
 app.use passport.session()
 app.use csurf()
