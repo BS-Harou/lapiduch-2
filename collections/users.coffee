@@ -55,7 +55,7 @@ users =
 		@param {function} cb
 	###
 	createUser: (userData, cb) ->
-		pass = security.hash userData.password, (err, hash, salt) ->
+		security.hash userData.password, (err, hash, salt) ->
 			user = 
 				username: userData.username
 				email: userData.email
@@ -64,7 +64,7 @@ users =
 				sex: userData.sex
 				createdAt: Date.now()
 				perm: userData.perm or PERM.USER
-				activate: security.hashString to
+				activate: security.hashString userData.email
 
 			db.none("""
 				INSERT INTO users (username, email, password, salt, sex, created_at, perm, activate)
@@ -84,12 +84,13 @@ users =
 
 	###*
 		@param {string} activate
+		@param {function} cb
 	###
-	users.activateUser (activate, cb) ->
+	activateUser: (activate, cb) ->
 		db.none("UPDATE users SET activate='' WHERE activate=$1", activate)
 		.then ->
 			return cb() if cb
-		.catch (err ->
+		.catch (err) ->
 			return cb err if cb
 		return
 

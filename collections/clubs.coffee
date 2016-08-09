@@ -23,7 +23,22 @@ clubs =
 	createNewClubFromForm: (formData) ->
 		return
 
-	createNewClub: (clubData) ->
+	createNewClub: (itemData, cb) ->
+		item = 
+			name: itemData.clubName
+			description: itemData.clubDesc
+			createdAt: Date.now()
+
+		db.none("""
+			INSERT INTO clubs (name, description, created_at)
+			VALUES(${name}, ${description}, ${createdAt})
+		""", item)
+		.then ->
+			return cb null
+		.catch (err) ->
+			console.log 'CREATE CLUB ERROR: ', err
+			return cb err
 		return
+
 
 module.exports = clubs

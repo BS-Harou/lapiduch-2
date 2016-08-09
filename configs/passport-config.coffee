@@ -4,6 +4,7 @@ users = require __base + 'collections/users'
 module.exports = (passport) ->
 
 	passport.use new LocalStrategy (username, password, done) ->
+		# Todo show errors liek Invalid password to user
 		users.loginUser username, password, done
 		return
 
@@ -14,7 +15,9 @@ module.exports = (passport) ->
 		# TODO User users collection to get use by id
 		db.one("SELECT * FROM users WHERE id=${userId}", { userId: id })
 		.then (user) ->
+			console.log 'User found'
 			return done null, user
 		.catch (err) ->
+			console.log 'User not found'
 			return done err if err
 		return

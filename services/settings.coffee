@@ -7,6 +7,15 @@ CUSTOM_SETTINGS = __base + 'custom-settings.yaml'
 fileMap = {}
 
 settings =
+	replaceVariable: (str) ->
+		str.replace /<\%= ENV\[\'(\w+)\'\] \%>/, (all, envVar) -> process.env[envVar]
+
+	replaceVariables: (obj) ->
+		for id, item of obj
+			obj[id] = @replaceVariable item if typeof item is 'string'
+			@replaceVariables item if typeof item is 'object'
+		return
+
 	parseYaml: (file) ->
 		return fileMap[file] if fileMap.hasOwnProperty file
 		try
@@ -14,6 +23,8 @@ settings =
 		catch e
 			console.log "Reading #{file} settings failed: ", e
 			doc = null
+		debugger
+		@replaceVariables doc
 		fileMap[file] = doc
 		return doc
 
@@ -24,4 +35,3 @@ settings =
 
 
 module.exports = settings
-			

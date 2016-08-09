@@ -9,7 +9,6 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 router.get '/', (req, res, next) ->
 	require('../collections/categories').getAllCategories (err, categoriesList) ->
 		# next err if err
-		categoriesList = []
 		params =
 			title: 'Index'
 			topList: topList
