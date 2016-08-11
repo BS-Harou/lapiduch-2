@@ -1,5 +1,6 @@
 express = require 'express'
-users = require __base + 'collections/users'
+categories = require __base + 'collections/categories'
+clubs = require __base + 'collections/clubs'
 router = express.Router()
 
 clubsList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-spanking", "Zbrane", "Sjezd Lhot a Lehot", "Hrátky s češtinou", "Politika a dění ve světě", "Klubiki"]
@@ -8,23 +9,23 @@ clubsList = clubsList.map (name) ->
 	link: name.replace(/\s/g, '-').toLowerCase()
 
 router.get '/', (req, res, next) ->
-	require('../collections/categories').getAllCategories (categoriesList) ->
+	categories.getAll (err, categoriesList) ->
 		params =
 			title: 'Kategorie'
 			categoriesList: categoriesList
-			csrfToken: req.csrfToken()
-		if req.user
-			params.user = username: req.user.username, avatar: req.user.avatar
 		res.render 'categories', params
 
-router.get '/:kat', (req, res, next) ->
-	params =
-		title: 'XXX'
-		clubsList: clubsList
-		csrfToken: req.csrfToken()
-	if req.user
-		params.user = username: req.user.username, avatar: req.user.avatar
-	res.render 'category', params
+router.get '/:cat', (req, res, next) ->
+	categories.find req.param.cat, (err, cat) ->
+		next err if err
+		clubs.findByCategory cat.id, (err, clubs) ->
+			next err if err
+			params =
+				title: cat.name
+				clubsList: clubs
+			res.render 'category', params
+		return
+	return
 
 
 

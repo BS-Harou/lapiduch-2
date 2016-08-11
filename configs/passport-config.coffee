@@ -5,7 +5,7 @@ module.exports = (passport) ->
 
 	passport.use new LocalStrategy (username, password, done) ->
 		# Todo show errors liek Invalid password to user
-		users.loginUser username, password, done
+		users.login username, password, done
 		return
 
 	passport.serializeUser (user, done) ->

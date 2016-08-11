@@ -2,21 +2,22 @@ security = require __base + 'services/security'
 mail = require __base + 'services/mail'
 cloudinary = require 'cloudinary'
 stream = require 'stream'
+normalize = require __base + 'services/normalize'
 
 PERM =
 	USER: 'user'
 	ADMIN: 'admin'
 
 users =
-	findUserById: (id) ->
+	findById: (id) ->
 		# magic
 		return
 
-	findUserByUsername: (username) ->
+	findByUsername: (username) ->
 		# magic
 		return
 
-	loginUser: (username, password, done) ->
+	login: (username, password, done) ->
 		db.one("SELECT * FROM users WHERE username=${username} OR email=${username}", { username: username })
 		.then (user) ->
 			return done null, false, message: 'Neexistujici uzivatel' unless user
@@ -32,11 +33,11 @@ users =
 		@param {!Object} formData
 		@param {function} cb
 	###
-	createUserFromForm: (formData, cb) ->
+	createFromForm: (formData, cb) ->
 		return cb('Špatná data') unless formData
 		# TODO existing username/email check
 		return cb('Neplatné uživatelské jméno') unless formData.username?.match /^\w{3,16}$/
-		return cb('Hesla se nervonají') unless formData.password is formData.confirmPassword
+		return cb('Hesla se nerovnají') unless formData.password is formData.confirmPassword
 		return cb('Neplatné heslo') unless formData.password?.match /^.{5,100}$/
 		return cb('Neplatný email') unless formData.email?.match /^\S{1,30}@\S{1,30}\.\S{1,30}$/
 		return cb('Neplatné pohlaví') unless formData.sex in ['male', 'female']
@@ -47,29 +48,31 @@ users =
 			password: formData.password
 			sex: formData.sex
 
-		@createUser userData, cb
+		@create userData, cb
 		return
 
 	###*
-		@param {!Object} userData
+		@param {!Object} data
 		@param {function} cb
 	###
-	createUser: (userData, cb) ->
-		security.hash userData.password, (err, hash, salt) ->
-			user = 
-				username: userData.username
-				email: userData.email
+	create: (data, cb) ->
+		security.hash data.password, (err, hash, salt) ->
+			storeData = 
+				username: data.username
+				normUsername: normalize data.username
+				email: data.email
 				password: hash
 				salt: salt
-				sex: userData.sex
+				sex: data.sex
 				createdAt: Date.now()
-				perm: userData.perm or PERM.USER
-				activate: security.hashString userData.email
+				perm: data.perm or PERM.USER
+				activate: security.hashString data.email
+				avatar: data.avatar or ''
 
 			db.none("""
-				INSERT INTO users (username, email, password, salt, sex, created_at, perm, activate)
-				VALUES(${username}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm}, ${activate})
-			""", user)
+				INSERT INTO users (username, norm_username, email, password, salt, sex, created_at, perm, activate, avatar)
+				VALUES(${username}, ${normUsername}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm}, ${activate}, ${avatar})
+			""", storeData)
 			.then ->
 				return cb null
 				mail.sendAuthMail user.email, user.activate, (err) ->
@@ -86,7 +89,7 @@ users =
 		@param {string} activate
 		@param {function} cb
 	###
-	activateUser: (activate, cb) ->
+	activate: (activate, cb) ->
 		db.none("UPDATE users SET activate='' WHERE activate=$1", activate)
 		.then ->
 			return cb() if cb
@@ -95,17 +98,20 @@ users =
 		return
 
 	###*
-		@param {!Buffer} userData
+		@param {!Buffer} buffer
 		@param {!Object} user
 		@param {function} cb
 	###
 	uploadAvatar: (buffer, user, cb) ->
 		# TODO handle errors (e.g.  interrupted stream upload)
 		cloudinaryStream = cloudinary.uploader.upload_stream (result) -> 
-			db.none("UPDATE users SET avatar=${avatar} WHERE id=${userId}", { userId: user.id, avatar: result.url })
+			console.log '>> RESULT >>', result
+			console.log '>> USER >>', user
+			db.none("UPDATE users SET avatar=${avatar} WHERE id=${userId}", { userId: user.id, avatar: result.secure_url })
 			.then ->
 				cb null, result
 			.catch (err) ->
+				console.log '>> ERR >> ', err
 				return cb err
 			return
 		, public_id: user.username

@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "Lapiduch reborn",
   "scripts": {
-    "start": "./node_modules/.bin/coffee ./bin/www"
+    "start": "./node_modules/.bin/coffee ./bin/www",
+    "debug": "set DEBUG=lapiduch-2:* & coffee --nodejs --debug ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
     "cookie-parser": "~1.4.3",
     "csurf": "^1.9.0",
     "debug": "~2.2.0",
+    "diacritics": "^1.2.3",
     "ect": "^0.5.9",
     "express": "~4.14.0",
     "express-session": "^1.14.0",

@@ -25,11 +25,12 @@ CREATE SEQUENCE public.users_id_seq
 CREATE TABLE public.users (
   id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
   username character varying(16),
+  norm_username character varying(16),
   password character varying(256),
   salt character varying(128),
   email character varying(64),
   perm character varying(16),
-  avatar character varying(64),
+  avatar character varying(128),
   sex character varying(16),
   motto character varying(128),
   web character varying(128),
@@ -59,7 +60,9 @@ CREATE SEQUENCE public.categories_id_seq
 CREATE TABLE public.categories (
   id integer NOT NULL DEFAULT nextval('categories_id_seq'::regclass),
   name character varying(64),
+  norm_name character varying(64),
   description character varying(128),
+  created_at bigint,
   CONSTRAINT categories_id_pk PRIMARY KEY (id)
 )
 WITH (OIDS=FALSE);
@@ -107,7 +110,9 @@ CREATE SEQUENCE public.clubs_id_seq
 
 CREATE TABLE public.clubs (
   id integer NOT NULL DEFAULT nextval('clubs_id_seq'::regclass),
+  category_id integer,
   name character varying(64),
+  norm_name character varying(64),
   description character varying(128),
   created_at bigint,
   CONSTRAINT clubs_id_pk PRIMARY KEY (id)
@@ -159,6 +164,7 @@ CREATE TABLE public.posts (
   message text,
   created_at bigint,
   user_id integer,
+  club_id integer,
   CONSTRAINT posts_id_pk PRIMARY KEY (id)
 )
 WITH (OIDS=FALSE);

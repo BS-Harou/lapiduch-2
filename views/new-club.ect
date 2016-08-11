@@ -32,6 +32,18 @@
 						</div>
 					</div>
 					<div class="form-group row">
+						<label for="club-category" class="col-sm-4 form-control-label">
+							<small>Kategorie:</small>
+						</label>
+						<div class="col-sm-8">
+							<select id="club-category" name="clubCategory" class="form-control form-control-sm" required>
+								<% for category in @categoriesList : %>
+									<option value="<%= category.id %>"><%= category.name %></option>
+								<% end %>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
 						<div class="col-sm-offset-4 col-sm-8 login-control">
 							<button type="submit" class="btn btn-secondary btn-sm">Vytvořit</button>
 						</div>

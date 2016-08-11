@@ -19,6 +19,7 @@ routes =
 	settings: require('./routes/settings')
 	categories: require('./routes/categories')
 	newClub: require('./routes/new-club')
+	clubs: require('./routes/clubs')
 app = express()
 
 settings = require(__base + 'services/settings').getSettings()
@@ -75,12 +76,21 @@ app.use session({
 app.use passport.initialize()
 app.use passport.session()
 app.use csurf()
+app.use (req, res, next) ->
+	if user = req.user
+		res.locals.user =
+			username: user.username
+			avatar: user.avatar
+	res.locals.csrfToken = req.csrfToken()
+	next()
+	return
 app.use '/bootstrap', express.static(__base + '/node_modules/bootstrap/dist/')
 app.use '/', routes.index
 app.use '/auth', routes.auth
 app.use '/nastaveni', routes.settings
 app.use '/kategorie', routes.categories
 app.use '/novyklub', routes.newClub
+app.use '/kluby', routes.clubs
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

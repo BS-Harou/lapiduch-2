@@ -219,3 +219,9 @@ header li.highlighted-item a {
 .clubs-table .posts-amount {
   text-align: right;
 }
+/**
+ * New Post form
+ */
+.new-post-form {
+  max-width: 40rem;
+}

@@ -5,6 +5,7 @@ async = require 'async'
 pgp = require('pg-promise')()
 global.db = db = require __base + 'configs/postgre-config'
 users = require './collections/users'
+categories = require './collections/categories'
 settings = require(__base + 'services/settings').getSettings()
 
 
@@ -24,10 +25,11 @@ async.waterfall [
 	(done) ->
 		console.log 'CREATING ADMIN'
 		# Create admin user
-		users.createUser({
+		users.create({
 			username: settings.admin.username
 			password: settings.admin.password
 			sex: 'male'
+			avatar: 'https://res.cloudinary.com/lapiduch/image/upload/v1470778713/Len_y.png'
 			email: settings.admin.email
 			perm: users.PERM.ADMIN
 		}, done)
@@ -37,18 +39,18 @@ async.waterfall [
 
 		# TODO move insert to collections/categories.coffee
 
-		categoriesList = ['Doprava', 'Fankluby', 'Film', 'Hry', 'Hudba', 'Humor', 'Internet', 'Kecarny',
-			'Konicky', 'Kultura', 'Lapiduch', 'Literatura', 'Medicina', 'Mesta a obce', 'Nezatridene',
-			'Partnestvi a sex', 'Pocitace', 'Politika', 'Programovani', 'Sci-fi a fantasy', 'Sci-fi svety',
-			'Sport', 'Svet kolem nas', 'Systemove', 'Televize', 'Veda a Technika', 'Vojenstvi a zbrane',
-			'Vzdelavani a skolstvi']
+		categoriesList = ['Doprava', 'Fankluby', 'Film', 'Hry', 'Hudba', 'Humor', 'Internet', 'Kecárny',
+			'Koníčky', 'Kultura', 'Lapiduch', 'Literatura', 'Medicína', 'Města a obce', 'Nezatříděné',
+			'Partneství a sex', 'Počítače', 'Politika', 'Programování', 'Sci-fi a fantasy', 'Sci-fi světy',
+			'Sport', 'Svět kolem nás', 'Systémové', 'Televize', 'Věda a Technika', 'Vojenství a zbraně',
+			'Vzdělávání a školství']
 
 		console.log 'CREATING CATEGORIES'
 
 		# TODO link
 		db.tx (t) ->
 	        queries = categoriesList.map (item) ->
-	            t.none "INSERT INTO categories(name, description) VALUES(${item}, ${item})", { item: item }
+	            categories.batch t, name: item, description: item
 	        return t.batch queries
 	    .then (data) ->
 	        done null

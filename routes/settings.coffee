@@ -18,9 +18,6 @@ router.get '/', (req, res, next) ->
 	return next() unless req.user
 	params =
 		title: 'Nastavení'
-		csrfToken: req.csrfToken()
-	if req.user
-		params.user = username: req.user.username, avatar: req.user.avatar
 	res.render 'settings', params
 
 router.post '/avatar', uploader.single('avatar'), (req, res, next) ->

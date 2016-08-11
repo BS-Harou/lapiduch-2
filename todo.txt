@@ -1,4 +1,10 @@
-- Redis store for sessions
+=> dodelat users/categories/clubs/posts zakladni funkcionalitu
+=> v kazdem requestu se musi specialne posilat csrf, user, atd.. :/ co s tim?
+=> posilani chyb z BE na FE (flash messages, debug only messages) 
+=> redis postgre reconnect
+=> redirect (probably) to prevent resubmit of forms
+
+
 - Responsive page
 - passport fb/tw/g auth
 - split app.coffee
@@ -10,19 +16,19 @@
 - Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
 - Fill form items when form is returne invalid
 - Add content-single instad of single content-right (kategorie, kluby)
-- Remove diacritics and otehr special characters from category/club links
+- Remove diacritics and other special characters from category/club links
 - created_at bigint -> timestamp
 - use ENV vars in yaml settings for db connects
 - Don't show "- Index" in title on lapiduch index route
 - Global template params (user, csfr)
 
 set NODE_TLS_REJECT_UNAUTHORIZED=0
-set DEBUG=myapp:* & coffee --nodejs --debug ./bin/www
+set DEBUG=lapiduch-2:* & coffee --nodejs --debug ./bin/www
+rhc port-forward -a app
 
 
 
 PERF/SECURITY:
-- Mongo indicies (username, email)
 - throttle avatar uploads
 - avatar change limit (10x a day or so)
 

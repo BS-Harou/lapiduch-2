@@ -1,38 +1,50 @@
 assert = require 'assert'
+normalize = require __base + 'services/normalize'
 
 clubs =
-	getAllClubs: (cb) ->
-		###
-		collection = mongodb.collection 'clubs'
-		collection.find({}).toArray (err, items) ->
-			assert.equal null, err
-			if typeof cb is 'function'
-				cb items.map (cat) ->
-					name: cat.name 
-					link: cat.name.replace(/\s/g, '-').toLowerCase()
+	getAll: (cb) ->
+		return unless typeof cb is 'function'
+		db.query('SELECT * FROM clubs')
+		.then (items) ->
+			cb null, items.map (item) ->
+				name: item.name 
+				nornName: item.norm_name
 			return
-		###
+		.catch (err) ->
+			return cb err if cb
 		return
 
-	getClubsByCategory: (catId) ->
+	findByCategory: (catIdent, cb) ->
+		db.query('SELECT * FROM clubs WHERE category_id=${ident}', { ident })
+		.then (items) ->
+			cb null, items.map (item) ->
+				name: item.name 
+				link: item.norm_name
+			return
+		.catch (err) ->
+			return cb err if cb
 		return
 
-	getFavoriteClubsByUser: (userId) ->
+	findFavoritesByUser: (userId) ->
 		return
 
-	createNewClubFromForm: (formData) ->
+	createFromForm: (formData) ->
 		return
 
-	createNewClub: (itemData, cb) ->
-		item = 
-			name: itemData.clubName
-			description: itemData.clubDesc
+	create: (data, cb) ->
+		# check name duplicity (unique in postgre?)
+		# check if category exists
+		storeData = 
+			name: data.clubName
+			categoryId: data.clubCategory
+			normName: normalize data.clubName
+			description: data.clubDesc
 			createdAt: Date.now()
 
 		db.none("""
-			INSERT INTO clubs (name, description, created_at)
-			VALUES(${name}, ${description}, ${createdAt})
-		""", item)
+			INSERT INTO clubs (name, norm_name, category_id, description, created_at)
+			VALUES(${name}, ${normName}, ${categoryId}, ${description}, ${createdAt})
+		""", storeData)
 		.then ->
 			return cb null
 		.catch (err) ->
