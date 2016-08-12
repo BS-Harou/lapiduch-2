@@ -1,0 +1,22 @@
+<% extend 'layout' %>
+
+<section class="section-activity">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent"><b>Za poslední hodinu nás navštívili tito uživatelé a uživatelky.</b></p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-single">
+			<% for user in @usersList : %>
+				<div><%= user.username %></div>
+			<% end %>
+		</div>
+	</div>
+</section>

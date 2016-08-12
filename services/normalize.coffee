@@ -1,5 +1,9 @@
 removeDiacritics = require('diacritics').remove
 
+###*
+	@param {string} str
+	@return {string}
+###
 normalize = (str) ->
 	str = removeDiacritics str
 	str = str.replace /\s+/g, '-'

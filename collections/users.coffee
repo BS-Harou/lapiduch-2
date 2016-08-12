@@ -17,30 +17,55 @@ users =
 		# magic
 		return
 
-	login: (username, password, done) ->
-		db.one("SELECT * FROM users WHERE username=${username} OR email=${username}", { username: username })
+	###*
+		@param {number} minutes
+		@return {!Promise}
+	###
+	findByActivity: (minutes) ->
+		queryData =
+			activity: minutes * 60 * 1000
+			currentTime: Date.now()
+		db.query("""
+			SELECT id, username, norm_username
+			FROM users
+			WHERE ${currentTime}-last_activity<${activity}
+		""", queryData)
+		.then (users) ->
+			users.map (user) ->
+				id: user.id
+				username: user.username
+				normUsername: user.norm_username
+
+	login: (username, password) ->
+		db.oneOrNone("SELECT * FROM users WHERE username=${username} OR email=${username}", { username: username })
 		.then (user) ->
-			return done null, false, message: 'Neexistujici uzivatel' unless user
-			pass = security.hash password, user.salt, (err, hash) ->
-				return done null, false, message: 'Incorrect password.' unless user.password is hash
-				return done null, user
-			return
-		.catch (err) ->
-			return done err
-		return
+			throw new Error 'Neexistujici uzivatel' unless user
+			security.hash password, user.salt
+			.then (hash) ->
+				throw new Error 'Incorrect password.' unless user.password is hash
+				user
+
+	###*
+		@param {number} userId
+		@return {!Promise}
+	###
+	updateActivity: (userId) ->
+		storeData =
+			'lastActivity': Date.now()
+		db.none('UPDATE users SET last_activity=${lastActivity}', storeData)
 
 	###*
 		@param {!Object} formData
-		@param {function} cb
+		@return {!Promise}
 	###
-	createFromForm: (formData, cb) ->
-		return cb('Špatná data') unless formData
+	createFromForm: (formData) ->
+		return Promise.reject('Špatná data') unless formData
 		# TODO existing username/email check
-		return cb('Neplatné uživatelské jméno') unless formData.username?.match /^\w{3,16}$/
-		return cb('Hesla se nerovnají') unless formData.password is formData.confirmPassword
-		return cb('Neplatné heslo') unless formData.password?.match /^.{5,100}$/
-		return cb('Neplatný email') unless formData.email?.match /^\S{1,30}@\S{1,30}\.\S{1,30}$/
-		return cb('Neplatné pohlaví') unless formData.sex in ['male', 'female']
+		return Promise.reject('Neplatné uživatelské jméno') unless formData.username?.match /^\w{3,16}$/
+		return Promise.reject('Hesla se nerovnají') unless formData.password is formData.confirmPassword
+		return Promise.reject('Neplatné heslo') unless formData.password?.match /^.{5,100}$/
+		return Promise.reject('Neplatný email') unless formData.email?.match /^\S{1,30}@\S{1,30}\.\S{1,30}$/
+		return Promise.reject('Neplatné pohlaví') unless formData.sex in ['male', 'female']
 
 		userData =
 			username: formData.username
@@ -48,78 +73,65 @@ users =
 			password: formData.password
 			sex: formData.sex
 
-		@create userData, cb
-		return
+		@create userData
 
 	###*
 		@param {!Object} data
-		@param {function} cb
+		@return {!Promise}
 	###
-	create: (data, cb) ->
-		security.hash data.password, (err, hash, salt) ->
-			storeData = 
-				username: data.username
-				normUsername: normalize data.username
-				email: data.email
-				password: hash
-				salt: salt
-				sex: data.sex
-				createdAt: Date.now()
-				perm: data.perm or PERM.USER
-				activate: security.hashString data.email
-				avatar: data.avatar or ''
+	create: (data) ->
+
+		storeData = 
+			username: data.username
+			normUsername: normalize data.username
+			email: data.email
+			sex: data.sex
+			createdAt: Date.now()
+			perm: data.perm or PERM.USER
+			activate: security.hashString data.email
+			avatar: data.avatar or ''
+
+		security.hash data.password
+		.then (hashData) ->
+			storeData.password = hashData.hash
+			storeData.salt = hashData.salt
 
 			db.none("""
 				INSERT INTO users (username, norm_username, email, password, salt, sex, created_at, perm, activate, avatar)
 				VALUES(${username}, ${normUsername}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm}, ${activate}, ${avatar})
 			""", storeData)
-			.then ->
-				return cb null
-				mail.sendAuthMail user.email, user.activate, (err) ->
-					return unless typeof cb is 'function'
-					return cb err if err
-					cb null
-				return
-			.catch (err) ->
-				return cb err if cb
-			return
-		return
+		.then ->
+			return null
+			mail.sendAuthMail storeData.email, storeData.activate
 
 	###*
 		@param {string} activate
-		@param {function} cb
+		@param {!Promise}
 	###
-	activate: (activate, cb) ->
+	activate: (activate) ->
 		db.none("UPDATE users SET activate='' WHERE activate=$1", activate)
-		.then ->
-			return cb() if cb
-		.catch (err) ->
-			return cb err if cb
-		return
 
 	###*
 		@param {!Buffer} buffer
 		@param {!Object} user
-		@param {function} cb
+		@return {!Promise}
 	###
-	uploadAvatar: (buffer, user, cb) ->
+	uploadAvatar: (buffer, user) ->
 		# TODO handle errors (e.g.  interrupted stream upload)
-		cloudinaryStream = cloudinary.uploader.upload_stream (result) -> 
-			console.log '>> RESULT >>', result
-			console.log '>> USER >>', user
-			db.none("UPDATE users SET avatar=${avatar} WHERE id=${userId}", { userId: user.id, avatar: result.secure_url })
-			.then ->
-				cb null, result
-			.catch (err) ->
-				console.log '>> ERR >> ', err
-				return cb err
-			return
-		, public_id: user.username
+		new Promise (resolve, reject) ->
+			cloudinaryStream = cloudinary.uploader.upload_stream (result) -> 
+				db.none("UPDATE users SET avatar=${avatar} WHERE id=${userId}", { userId: user.id, avatar: result.secure_url })
+				.then ->
+					resolve result
+				.catch (err) ->
+					reject err
+				return
+			, public_id: user.username
 
-		bufferStream = new stream.PassThrough()
-		bufferStream.end(buffer);
-		bufferStream.pipe(cloudinaryStream)
-		return
+			bufferStream = new stream.PassThrough()
+			bufferStream.end(buffer);
+			bufferStream.pipe(cloudinaryStream)
+			return
 
 users.PERM = PERM
 

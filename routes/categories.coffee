@@ -9,24 +9,24 @@ clubsList = clubsList.map (name) ->
 	link: name.replace(/\s/g, '-').toLowerCase()
 
 router.get '/', (req, res, next) ->
-	categories.getAll (err, categoriesList) ->
-		return next err if err
+	categories.getAll()
+	.then (categoriesList) ->
 		params =
 			title: 'Kategorie'
 			categoriesList: categoriesList
 		res.render 'categories', params
+	.catch next
 
 router.get '/:cat', (req, res, next) ->
-	categories.find req.params.cat, (err, cat) ->
-		return next err if err
-		clubs.findByCategory cat.id, (err, clubs) ->
-			return next err if err
-			params =
-				title: cat.name
-				clubsList: clubs
-			res.render 'category', params
-		return
-	return
+	params = {}
+	categories.find req.params.cat
+	.then (cat) ->
+		params.title = cat.name
+		clubs.findByCategory cat.id
+	.then (clubs) ->
+		params.clubsList = clubs
+		res.render 'category', params
+	.catch next
 
 
 

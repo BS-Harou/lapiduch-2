@@ -2,23 +2,20 @@ assert = require 'assert'
 normalize = require __base + 'services/normalize'
 
 clubs =
-	getAll: (cb) ->
-		return unless typeof cb is 'function'
-		db.query('SELECT * FROM clubs')
-		.then (items) ->
-			cb null, items.map (item) ->
-				name: item.name 
-				normName: item.norm_name
-			return
-		.catch (err) ->
-			return cb err if cb
-		return
 
 	###*
-		@param {string|object} ident - id or normName of a club
-		@param {function} cb
+		@return {!Promise}
 	###
-	find: (ident, cb) ->
+	getAll: ->
+		db.query('SELECT * FROM clubs')
+		.then (items) =>
+			items.map @transformOut
+
+	###*
+		@param {string|number} ident - id or normName of a club
+		@return {!Promise}
+	###
+	find: (ident) ->
 		searchData =
 			searchBy: if typeof ident is 'number' then 'id' else 'norm_name'
 			ident: ident
@@ -27,51 +24,81 @@ clubs =
 			FROM clubs INNER JOIN categories ON clubs.category_id=categories.id
 			WHERE clubs.${searchBy~}=${ident}
 		""", searchData)
-		.then (item) ->
-			return cb null, item
-		.catch (err) ->
-			return cb err
-		return
+		.then (item) =>
+			@transformOut item
 
-	findByCategory: (catId, cb) ->
+	###*
+		@param {number} catId
+		@return {!Promise}
+	###
+	findByCategory: (catId) ->
 		db.query('SELECT * FROM clubs WHERE category_id=${catId}', { catId })
-		.then (items) ->
-			cb null, items.map (item) ->
-				name: item.name 
-				link: item.norm_name
-			return
-		.catch (err) ->
-			return cb err if cb
-		return
+		.then (items) =>
+			items.map @transformOut
 
 	findFavoritesByUser: (userId) ->
 		return
 
+	###*
+		@param {data} formData
+		@return {!Promise}
+	###
 	createFromForm: (formData) ->
-		return
+		@create
+			name: formData.clubName
+			categoryId: formData.clubCategory
+			description: formData.clubDesc
 
-	create: (data, cb) ->
+	###*
+		@param {!Object} data
+		@return {!Object}
+	###
+	transformIn: (data) ->
+		name: data.name
+		categoryId: data.categoryId
+		normName: normalize data.name
+		description: data.description
+		createdAt: Date.now()
+
+	###*
+		@param {!Object} data
+		@return {!Object}
+	###
+	transformOut: (data) ->
+		id: data.id
+		name: data.name
+		normName: data.norm_name
+		createdAt: data.created_at
+		description: data.description
+		categoryId: data.category_id
+		categoryName: data.category_name
+
+	###*
+		@param {!Object} t transaction
+		@param {!Object} data
+	###
+	batch: (t, data) ->
+		storeData = @transformIn data
+
+		t.none("""
+			INSERT INTO clubs (name, norm_name, category_id, description, created_at)
+			VALUES(${name}, ${normName}, ${categoryId}, ${description}, ${createdAt})
+		""", storeData)
+
+	###*
+		@param {!Object} data
+		@param {!Promise}
+	###
+	create: (data) ->
 		# TODO:
 		# check name duplicity (unique in postgre?)
 		# check if category exists
 		# insert into club_owners
-		storeData = 
-			name: data.clubName
-			categoryId: data.clubCategory
-			normName: normalize data.clubName
-			description: data.clubDesc
-			createdAt: Date.now()
+		storeData = @transformIn data
 
 		db.none("""
 			INSERT INTO clubs (name, norm_name, category_id, description, created_at)
 			VALUES(${name}, ${normName}, ${categoryId}, ${description}, ${createdAt})
 		""", storeData)
-		.then ->
-			return cb null
-		.catch (err) ->
-			console.log 'CREATE CLUB ERROR: ', err
-			return cb err
-		return
-
 
 module.exports = clubs

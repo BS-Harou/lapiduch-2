@@ -16,7 +16,7 @@ CREATE SEQUENCE public.users_id_seq
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
-  START 4
+  START 1
   CACHE 1;
 -- ALTER TABLE public.users_id_seq OWNER TO postgres;
 
@@ -35,9 +35,11 @@ CREATE TABLE public.users (
   motto character varying(128),
   web character varying(128),
   created_at bigint,
+  last_activity bigint,
   activate character varying(64),
   CONSTRAINT users_pk PRIMARY KEY (id),
   CONSTRAINT users_email_uq UNIQUE (email),
+  CONSTRAINT users_norm_username_uq UNIQUE (norm_username),
   CONSTRAINT users_username_uq UNIQUE (username)
 )
 WITH (OIDS=FALSE);
@@ -63,7 +65,8 @@ CREATE TABLE public.categories (
   norm_name character varying(64),
   description character varying(128),
   created_at bigint,
-  CONSTRAINT categories_id_pk PRIMARY KEY (id)
+  CONSTRAINT categories_id_pk PRIMARY KEY (id),
+  CONSTRAINT categories_norm_name_uq UNIQUE (norm_name)
 )
 WITH (OIDS=FALSE);
 -- ALTER TABLE public.categories OWNER TO postgres;
@@ -115,7 +118,8 @@ CREATE TABLE public.clubs (
   norm_name character varying(64),
   description character varying(128),
   created_at bigint,
-  CONSTRAINT clubs_id_pk PRIMARY KEY (id)
+  CONSTRAINT clubs_id_pk PRIMARY KEY (id),
+  CONSTRAINT clubs_norm_name_uq UNIQUE (norm_name)
 )
 WITH (OIDS=FALSE);
 -- ALTER TABLE public.clubs OWNER TO postgres;

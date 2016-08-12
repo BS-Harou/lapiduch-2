@@ -14,12 +14,14 @@ helmet = require('helmet')
 csurf = require('csurf')
 
 routes =
+	all: require('./routes/all')
 	index: require('./routes/index')
 	auth: require('./routes/auth')
 	settings: require('./routes/settings')
 	categories: require('./routes/categories')
 	newClub: require('./routes/new-club')
 	clubs: require('./routes/clubs')
+	activity: require('./routes/activity')
 app = express()
 
 settings = require(__base + 'services/settings').getSettings()
@@ -84,6 +86,7 @@ app.use (req, res, next) ->
 	res.locals.csrfToken = req.csrfToken()
 	next()
 	return
+app.use '*', routes.all
 app.use '/bootstrap', express.static(__base + '/node_modules/bootstrap/dist/')
 app.use '/', routes.index
 app.use '/auth', routes.auth
@@ -91,6 +94,7 @@ app.use '/nastaveni', routes.settings
 app.use '/kategorie', routes.categories
 app.use '/novyklub', routes.newClub
 app.use '/kluby', routes.clubs
+app.use '/pritomni', routes.activity
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

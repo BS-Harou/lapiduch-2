@@ -3,6 +3,9 @@
 => posilani chyb z BE na FE (flash messages, debug only messages) 
 => redis postgre reconnect
 => redirect (probably) to prevent resubmit of forms
+=> b-tree indexes on columns we order by
+=> use promies instead of callbacks in collectioins
+=> all forms validations
 
 
 - Responsive page

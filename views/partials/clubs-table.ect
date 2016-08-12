@@ -4,7 +4,7 @@
 	<% for club in @clubsList : %>
 		<tr>
 			<td>
-				<a href="/kluby/<%= club.link %>"><%= club.name %></a>
+				<a href="/kluby/<%= club.normName %>"><%= club.name %></a>
 				<span class="club-desc"><%= club.name %></span>
 			</td>
 			<td class="posts-amount">

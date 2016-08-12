@@ -2,35 +2,32 @@ assert = require 'assert'
 normalize = require __base + 'services/normalize'
 
 categories =
-	getAll: (cb) ->
-		return unless typeof cb is 'function'
+
+	###*
+		@return {!Promise}
+	###
+	getAll: ->
 		db.query('SELECT * FROM categories')
-		.then (storeData) ->
-			cb null, storeData.map (item) ->
-				id: item.id
-				name: item.name
-				normName: item.norm_name
-			return
-		.catch (err) ->
-			return cb err if cb
-		return
+		.then (storeData) =>
+			storeData.map @transformOut
 
 	###*
 		@param {string|object} ident - id or normName of a category
-		@param {function} cb
+		@return {!Promise}
 	###
-	find: (ident, cb) ->
+	find: (ident) ->
 		searchData =
 			searchBy: if typeof ident is 'number' then 'id' else 'norm_name'
 			ident: ident
 		db.one("SELECT * FROM categories WHERE ${searchBy~}=${ident}", searchData)
-		.then (item) ->
-			return cb null, item
-		.catch (err) ->
-			return cb err
-		return
+		.then (item) =>
+			@transformOut item 
 
-	transform: (data) ->
+	###*
+		@param {!Object} data
+		@return {!Object}
+	###
+	transformIn: (data) ->
 		name: data.name
 		normName: normalize data.name
 		description: data.description
@@ -38,30 +35,34 @@ categories =
 
 	###*
 		@param {!Object} data
-		@param {function} cb
+		@return {!Object}
 	###
-	create: (data, cb) ->
-		storeData = @transform data
+	transformOut: (data) ->
+		id: data.id
+		name: data.name
+		normName: data.norm_name
+		description: data.description
+		createdAt: data.created_at
+
+	###*
+		@param {!Object} data
+		@param {!Promise}
+	###
+	create: (data) ->
+		storeData = @transformIn data
 
 		db.none("""
 			INSERT INTO categories (name, norm_name, description, created_at)
 			VALUES(${name}, ${normName}, ${description}, ${createdAt})
 		""", storeData)
-		.then ->
-			return unless typeof cb is 'function'
-			return cb null
-		.catch (err) ->
-			return unless typeof cb is 'function'
-			return cb err if cb
-		return
 
 	###*
 		@param {!Object} t transaction
 		@param {!Object} data
 	###
 	batch: (t, data) ->
-		storeData = @transform data
-		return t.none("""
+		storeData = @transformIn data
+		t.none("""
 			INSERT INTO categories (name, norm_name, description, created_at)
 			VALUES(${name}, ${normName}, ${description}, ${createdAt})
 		""", storeData)

@@ -15,16 +15,17 @@ uploader = multer({
 })
 
 router.get '/', (req, res, next) ->
-	return next() unless req.user
+	return next new Error 'Nejste prihlaseni' unless req.user
 	params =
 		title: 'Nastavení'
 	res.render 'settings', params
 
 router.post '/avatar', uploader.single('avatar'), (req, res, next) ->
-	return next() unless req.user
-	users.uploadAvatar req.file.buffer, req.user, (err) ->
-		return next err if err
+	return next new Error 'Nejste prihlaseni' unless req.user
+	users.uploadAvatar req.file.buffer, req.user
+	.then ->
 		res.redirect '/nastaveni'
+	.catch next
 
 
 module.exports = router

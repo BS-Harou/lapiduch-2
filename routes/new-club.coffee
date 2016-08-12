@@ -7,22 +7,20 @@ categories = require __base + 'collections/categories'
 
 router.get '/', (req, res, next) ->
 	return next new Error 'Nejste prihlaseni' unless req.user
-	categories.getAll (err, categoriesList) ->
-		return next err if err
+	categories.getAll()
+	.then (categoriesList) ->
 		params =
 			title: 'Nový klub'
 			categoriesList: categoriesList
 		res.render 'new-club', params
-		return
-	return
+	.catch next
 
 router.post '/', (req, res, next) ->
 	return next new Error 'Nejste prihlaseni' unless req.user
-	clubs.create req.body, (err) ->
-		return next err if err
+	clubs.createFromForm req.body
+	.then ->
 		res.redirect '/'
-		return
-	return
+	.catch next
 
 
 

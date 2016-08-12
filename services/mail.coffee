@@ -8,14 +8,23 @@ transporter = nodemailer.createTransport settings.mail.smtp
 FROM = '"Lapiduch" <lapiduch@martinkadlec.eu>'
 
 mail =
-	sendMail: (mailOptions, cb) ->
-		transporter.sendMail mailOptions, (error, info) ->
-			return cb error if error
-			return cb null, info.response
-		return
 
-	# TODO util to get absolute lapiduch url, use actual working url
-	sendAuthMail: (to, activate, cb) ->
+	###*
+		@param {!Object} mailOptions
+		@return {!Promise}
+	###
+	sendMail: (mailOptions) ->
+		transporter.sendMail(mailOptions)
+		.then (info) ->
+			info.response
+
+	###*
+		TODO util to get absolute lapiduch url, use actual working url
+		@param {string} to
+		@param {string} activate
+		@return {!Promise}
+	####
+	sendAuthMail: (to, activate) ->
 
 		link = "#{settings.url}/auth/activate/#{activate}"
 
@@ -27,8 +36,7 @@ mail =
 				Děkujeme za registraci na diskuzním serveru lapiduch.cz. Potvrďte prosím svou registraci kliknutím na následující odkaz:\n\n
 				#{hashString(link)}
 			"""
-		@sendMail mailOptions, cb
-		return
+		@sendMail mailOptions
 
 module.exports = mail
 			

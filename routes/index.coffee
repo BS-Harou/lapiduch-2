@@ -8,13 +8,14 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 
 # GET home page
 router.get '/', (req, res, next) ->
-	categories.getAll (err, categoriesList) ->
-		return next err if err
+	categories.getAll()
+	.then (categoriesList) ->
 		params =
 			title: 'Index'
 			topList: topList
 			categoriesList: categoriesList
 		res.render 'index', params
+	.catch next
 
 
 module.exports = router

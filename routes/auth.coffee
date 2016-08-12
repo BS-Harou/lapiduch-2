@@ -8,21 +8,22 @@ LocalStrategy = require('passport-local').Strategy;
 # GET user signup page
 router.get '/registrace', (req, res, next) ->
 	res.render 'signup', { title: 'Registrace' }
-	return
 
 # POST registration details
 router.post '/registrace', (req, res, next) ->
-	users.createFromForm req.body, (err) ->
-		return next err if err
-		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString() }
-	return
+	users.createFromForm req.body
+	.then (err) ->
+		res.render 'signup', { title: 'Registrace', success: yes }
+	.catch (err) ->
+		return next err if err # TODO
+		res.render 'signup', { title: 'Registrace', success: no, errorMessage: err?.toString() }
 
 # POST activate user
 router.post '/activate/:activate', (req, res, next) ->
-	users.activate req.something, (err) ->
-		return next err if err
+	users.activate(req.something)
+	.then ->
 		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString() }
-	return
+	.catch next
 
 router.get '/odhlasit', (req, res) ->
   req.logout()
