@@ -13,14 +13,14 @@ router.get '/registrace', (req, res, next) ->
 # POST registration details
 router.post '/registrace', (req, res, next) ->
 	users.createFromForm req.body, (err) ->
-		console.log 'ERR: ', err
+		return next err if err
 		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString() }
 	return
 
 # POST activate user
 router.post '/activate/:activate', (req, res, next) ->
 	users.activate req.something, (err) ->
-		console.log 'ERR: ', err
+		return next err if err
 		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString() }
 	return
 

@@ -113,14 +113,13 @@ header li.highlighted-item a {
 }
 .content .content-single {
   flex: 1 1 auto;
-  padding: 1rem 0.3rem;
+  padding: 0rem 0.3rem;
 }
 /**
  * Action panel
  */
 .action-panel {
   background: linear-gradient(to bottom, #9baad1 0%, #becfeb 0.5rem, #becfeb calc(100% - 0.5rem), #9baad1 100%);
-  margin-bottom: 0.2rem;
 }
 .action-panel ul {
   margin: 0;
@@ -140,6 +139,9 @@ header li.highlighted-item a {
 .action-panel a {
   color: #002f06;
   font-weight: bold;
+}
+.lapiduch-panel {
+  margin-bottom: 0.2rem;
 }
 /**
  * Categories list
@@ -224,4 +226,87 @@ header li.highlighted-item a {
  */
 .new-post-form {
   max-width: 40rem;
+}
+/**
+ * Posts list
+ */
+.posts-list .post-item {
+  margin: 0;
+  border-top: 2px solid #a5adc6;
+  display: flex;
+}
+.posts-list .post-left {
+  flex: 0 0 4rem;
+  max-width: 4rem;
+  background: #ffe7ff;
+  text-align: center;
+  padding: 0.4rem 0.2rem;
+}
+.posts-list .post-right {
+  flex: 1 1 auto;
+}
+.posts-list .post-header {
+  padding: 0.1rem 1rem;
+  background: #e7eff7;
+}
+.posts-list .post-username {
+  color: #5a5a5a;
+  font-size: 1.12rem;
+  font-weight: bold;
+}
+.posts-list .post-motto {
+  font-style: italic;
+  color: #313131;
+  font-size: 0.8rem;
+}
+.posts-list .post-date {
+  color: #313131;
+  font-size: 0.8rem;
+}
+.posts-list .post-new {
+  color: #842163;
+  font-size: 0.8rem;
+}
+.posts-list .post-id {
+  color: #a5adc6;
+  font-size: 0.8rem;
+}
+.posts-list .post-main {
+  padding: 0.3rem 1rem 1.5rem 1rem;
+  font-size: 1.09rem;
+}
+.posts-list .post-title {
+  min-height: 1.4rem;
+  font-weight: bold;
+  color: #006400;
+  padding-bottom: 0.3rem;
+}
+/**
+ * Club panel
+ */
+.club-panel {
+  margin-bottom: 0.2rem;
+}
+/**
+ * Club forms
+ */
+.club-forms {
+  display: flex;
+  background: #e8edf1;
+  padding: 0.5rem 0.3rem;
+  margin-bottom: 1rem;
+  border-radius: 1rem;
+}
+.club-forms .club-forms-left {
+  flex: 0 0 14rem;
+  max-width: 14rem;
+}
+.club-forms .club-forms-right {
+  flex: 1 1 auto;
+}
+/**
+ * search-post-form
+ */
+.search-post-form {
+  width: 100%;
 }

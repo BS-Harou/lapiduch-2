@@ -111,7 +111,7 @@ header
 		
 	.content-single
 		flex: 1 1 auto
-		padding: 1rem 0.3rem
+		padding: 0rem 0.3rem
 		
 
 /**
@@ -119,7 +119,6 @@ header
  */
 .action-panel
 	background: linear-gradient(to bottom, rgb(155, 170, 209) 0%, rgb(190, 207, 235) 0.5rem, rgb(190, 207, 235) calc(100% - 0.5rem), rgb(155, 170, 209) 100%)
-	margin-bottom: 0.2rem
 	
 	ul
 		margin: 0
@@ -137,6 +136,9 @@ header
 	a
 		color: rgb(0, 47, 6)
 		font-weight: bold
+		
+.lapiduch-panel
+	margin-bottom: 0.2rem
 			
 /**
  * Categories list
@@ -217,3 +219,89 @@ header
  */
 .new-post-form
 	max-width: 40rem
+	
+/**
+ * Posts list
+ */
+.posts-list
+	.post-item
+		margin: 0
+		border-top: 2px solid rgb(165, 173, 198)
+		display: flex
+		
+	.post-left
+		flex: 0 0 4rem
+		max-width: 4rem
+		background: rgb(255, 231, 255)
+		text-align: center
+		padding: 0.4rem 0.2rem
+		
+	.post-right
+		flex: 1 1 auto
+		
+	.post-header
+		padding: 0.1rem 1rem
+		background: rgb(231, 239, 247)
+		
+	.post-username
+		color: rgb(90, 90, 90)
+		font-size: 1.12rem
+		font-weight: bold
+		
+	.post-motto
+		font-style: italic
+		color: rgb(49, 49, 49)
+		font-size: 0.8rem
+		
+	.post-date
+		color: rgb(49, 49, 49)
+		font-size: 0.8rem
+		
+	.post-new
+		color: rgb(132, 33, 99)
+		font-size: 0.8rem
+		
+	.post-id
+		color: rgb(165, 173, 198)
+		font-size: 0.8rem
+		
+	.post-main
+		padding: 0.3rem 1rem 1.5rem 1rem
+		font-size: 1.09rem
+		
+	.post-title
+		min-height: 1.4rem
+		font-weight: bold
+		color: darkgreen
+		padding-bottom: 0.3rem
+		
+
+/**
+ * Club panel
+ */
+.club-panel
+	margin-bottom: 0.2rem
+
+/**
+ * Club forms
+ */
+.club-forms
+	display: flex
+	background: #e8edf1
+	padding: 0.5rem 0.3rem
+	margin-bottom: 1rem
+	border-radius: 1rem
+
+	.club-forms-left
+		flex: 0 0 14rem
+		max-width: 14rem
+		
+	.club-forms-right
+		flex: 1 1 auto
+
+/**
+ * search-post-form
+ */
+ 
+.search-post-form
+	width: 100%

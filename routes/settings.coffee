@@ -23,6 +23,7 @@ router.get '/', (req, res, next) ->
 router.post '/avatar', uploader.single('avatar'), (req, res, next) ->
 	return next() unless req.user
 	users.uploadAvatar req.file.buffer, req.user, (err) ->
+		return next err if err
 		res.redirect '/nastaveni'
 
 

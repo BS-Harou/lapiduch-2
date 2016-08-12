@@ -1,0 +1,30 @@
+<% extend 'layout' %>
+
+<section class="section-club">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent">Klub <b><%= @clubName %></b> (kategorie <%= @categoryName %>) moderuje UUU</p>
+			<p>Tohle je nejaky popis klubu, ktery vlastne ale vubec neexistuje. Problem?</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-single">
+			<% include 'partials/club-panel' %>
+			<div class="club-forms">
+				<div class="club-forms-left">
+					<% include 'partials/search-post-form' %>
+				</div>
+				<div class="club-forms-right">
+					<% include 'partials/new-post-form' %>
+				</div>
+			</div>
+			<% include 'partials/posts-list' %>
+		</div>
+	</div>
+</section>

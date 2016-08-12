@@ -1,0 +1,30 @@
+<form method="post" action="/kluby/<%= @clubIdent %>/hledat" class="search-post-form">
+	<div class="container">
+		<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
+
+		<div class="form-group row row-no-padding">
+			<label for="search-post-author" class="col-sm-3 form-control-label">
+				autor:
+			</label>
+			<div class="col-sm-9 login-control">
+				<input type="text" id="search-post-author" name="author" class="form-control form-control-sm" />
+			</div>
+		</div>
+
+		<div class="form-group row row-no-padding">
+			<label for="search-post-text" class="col-sm-3 form-control-label">
+				text:
+			</label>
+			<div class="col-sm-9 login-control">
+				<input type="text" id="search-post-text" name="text" class="form-control form-control-sm" />
+			</div>
+		</div>
+		
+		<div class="form-group row row-no-padding">
+			<div class="col-sm-offset-3 col-sm-9 login-control">
+				<button type="submit" class="btn btn-secondary btn-sm">Hledat</button>
+			</div>
+		</div>
+	</div>
+</form>
+<% end %>

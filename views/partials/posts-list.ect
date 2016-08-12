@@ -1,0 +1,23 @@
+<div class="posts-list">
+
+	<% for post in @postsList : %>
+		<div class="post-item">
+			<div class="post-left">
+				<img src="<%= post.avatar %>" width="40" height="50" />
+			</div>
+			<div class="post-right">
+				<div class="post-header">
+					<span class="post-username"><%= post.username %></span>
+					<span class="post-motto">Cizáky tady nechceme</span>
+					<span class="post-date">11.08.2016 18:49</span>
+					<span class="post-new">Nové</span>
+				</div>
+				<div class="post-main">
+					<div class="post-title"><%= post.title %></div>
+					<div class="post-message"><%= post.message %></div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+</div>

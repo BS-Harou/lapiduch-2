@@ -10,16 +10,17 @@ clubsList = clubsList.map (name) ->
 
 router.get '/', (req, res, next) ->
 	categories.getAll (err, categoriesList) ->
+		return next err if err
 		params =
 			title: 'Kategorie'
 			categoriesList: categoriesList
 		res.render 'categories', params
 
 router.get '/:cat', (req, res, next) ->
-	categories.find req.param.cat, (err, cat) ->
-		next err if err
+	categories.find req.params.cat, (err, cat) ->
+		return next err if err
 		clubs.findByCategory cat.id, (err, clubs) ->
-			next err if err
+			return next err if err
 			params =
 				title: cat.name
 				clubsList: clubs

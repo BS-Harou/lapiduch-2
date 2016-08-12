@@ -49,7 +49,7 @@ app.set 'views', path.join(__base, 'views')
 app.set 'view engine', 'ect'
 app.engine 'ect', ectRenderer.render
 # TODO get lapiduch favicon
-#app.use(favicon(path.join(__base, 'public', 'favicon.ico')));
+app.use favicon(path.join(__base, 'public', 'favicon.ico'))
 app.use helmet()
 app.use helmet.contentSecurityPolicy
   directives: 

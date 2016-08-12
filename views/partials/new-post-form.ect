@@ -1,0 +1,25 @@
+<form method="post" action="/kluby/<%= @clubIdent %>/pridat" class="new-post-form">
+	<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
+
+	<div class="container">
+		<div class="form-group row">
+			
+			<div class="col-sm-5">
+				<input type="text" id="new-post-title" name="title" class="form-control form-control-sm" maxlength="128" />
+			</div>
+			<label for="new-post-title" class="col-sm-3 form-control-label">
+				<small>Titulek, text příspěvku</small>
+			</label>
+			<div class="col-sm-4">
+				<button type="submit" class="btn btn-secondary btn-sm">Náhled</button>
+				<button type="submit" class="btn btn-secondary btn-sm">Odeslat</button>
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<div class="col-sm-12">
+				<textarea id="new-post-message" name="message" class="form-control form-control-sm" required  maxlength="5000"></textarea>
+			</div>	
+		</div>
+	</div>
+</form>

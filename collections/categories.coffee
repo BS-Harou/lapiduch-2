@@ -16,16 +16,16 @@ categories =
 		return
 
 	###*
-		@param {string|object} ident - id or normName of category
+		@param {string|object} ident - id or normName of a category
 		@param {function} cb
 	###
 	find: (ident, cb) ->
 		searchData =
-			searchBy: if typeof ident is 'number' then 'id' else 'normName'
+			searchBy: if typeof ident is 'number' then 'id' else 'norm_name'
 			ident: ident
-		db.one("SELECT * FROM categories WHERE ${searchBy}=${ident}", searchData)
-		.then (category) ->
-			return cb null, category
+		db.one("SELECT * FROM categories WHERE ${searchBy~}=${ident}", searchData)
+		.then (item) ->
+			return cb null, item
 		.catch (err) ->
 			return cb err
 		return

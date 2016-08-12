@@ -23,7 +23,6 @@ settings =
 		catch e
 			console.log "Reading #{file} settings failed: ", e
 			doc = null
-		debugger
 		@replaceVariables doc
 		fileMap[file] = doc
 		return doc

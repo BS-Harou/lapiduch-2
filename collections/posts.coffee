@@ -1,8 +1,29 @@
 assert = require 'assert'
 
 posts =
-	getAll: (clubId, fromId, cb) ->
-		# SELECT * FROM posts WHERE club_id = ${clubId} AND id >= ${fromId} LIMIT ${userSettingsPostPerPage}
+	getAll: (clubId, cb) ->
+		return unless typeof cb is 'function'
+		db.query('SELECT * FROM posts')
+		.then (items) ->
+			cb null, items
+			return
+		.catch (err) ->
+			return cb err if cb
+		return
+
+	findByClub: (clubId, cb) ->
+		db.query("""
+			SELECT posts.*, users.username as username, users.avatar as avatar
+			FROM posts LEFT JOIN users ON posts.user_id=users.id
+			WHERE club_id=${clubId}
+			ORDER BY posts.created_at DESC
+			LIMIT 15
+		""", { clubId })
+		.then (items) ->
+			cb null, items
+			return
+		.catch (err) ->
+			return cb err if cb
 		return
 
 	create: (data, cb) ->

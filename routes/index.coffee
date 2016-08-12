@@ -9,7 +9,7 @@ topList = ["Volím Lapiduch", "SPANKING", "Hifi inzerce", "Hezké slečny", "E-s
 # GET home page
 router.get '/', (req, res, next) ->
 	categories.getAll (err, categoriesList) ->
-		# next err if err
+		return next err if err
 		params =
 			title: 'Index'
 			topList: topList

@@ -8,14 +8,33 @@ clubs =
 		.then (items) ->
 			cb null, items.map (item) ->
 				name: item.name 
-				nornName: item.norm_name
+				normName: item.norm_name
 			return
 		.catch (err) ->
 			return cb err if cb
 		return
 
-	findByCategory: (catIdent, cb) ->
-		db.query('SELECT * FROM clubs WHERE category_id=${ident}', { ident })
+	###*
+		@param {string|object} ident - id or normName of a club
+		@param {function} cb
+	###
+	find: (ident, cb) ->
+		searchData =
+			searchBy: if typeof ident is 'number' then 'id' else 'norm_name'
+			ident: ident
+		db.one("""
+			SELECT clubs.*, categories.name as category_name
+			FROM clubs INNER JOIN categories ON clubs.category_id=categories.id
+			WHERE clubs.${searchBy~}=${ident}
+		""", searchData)
+		.then (item) ->
+			return cb null, item
+		.catch (err) ->
+			return cb err
+		return
+
+	findByCategory: (catId, cb) ->
+		db.query('SELECT * FROM clubs WHERE category_id=${catId}', { catId })
 		.then (items) ->
 			cb null, items.map (item) ->
 				name: item.name 
@@ -32,8 +51,10 @@ clubs =
 		return
 
 	create: (data, cb) ->
+		# TODO:
 		# check name duplicity (unique in postgre?)
 		# check if category exists
+		# insert into club_owners
 		storeData = 
 			name: data.clubName
 			categoryId: data.clubCategory

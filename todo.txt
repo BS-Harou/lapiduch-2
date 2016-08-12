@@ -21,6 +21,7 @@
 - use ENV vars in yaml settings for db connects
 - Don't show "- Index" in title on lapiduch index route
 - Global template params (user, csfr)
+- tab indexes (new post form, ...)
 
 set NODE_TLS_REJECT_UNAUTHORIZED=0
 set DEBUG=lapiduch-2:* & coffee --nodejs --debug ./bin/www
