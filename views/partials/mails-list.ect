@@ -1,0 +1,26 @@
+<div class="post-list posts-list">
+	<% if @postsList?.length : %>
+		<% for post in @postsList : %>
+			<div class="post-item mail-item">
+				<div class="post-left mail-left">
+					<img src="<%= post.avatar %>" width="40" height="50" />
+				</div>
+				<div class="post-right mail-right">
+					<div class="post-header mail-header">
+						<span class="post-username mail-username"><%= post.username %></span>
+						<span class="post-motto mail-motto"><%= post.motto %></span>
+						<span class="post-date mail-date"><%= post.createdAt %>, <%= post.createdAtFormatted %></span>
+						<span class="post-new mail-new">Nové</span>
+					</div>
+					<div class="post-main mail-main">
+						<div class="post-title mail-title"><%= post.title %></div>
+						<div class="post-message mail-message"><%= post.message %></div>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	<% else : %>
+		<p>Pusto prázdno</p>
+	<% end %>
+
+</div>

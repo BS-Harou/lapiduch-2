@@ -1,29 +1,25 @@
 => dodelat users/categories/clubs/posts zakladni funkcionalitu
-=> v kazdem requestu se musi specialne posilat csrf, user, atd.. :/ co s tim?
 => posilani chyb z BE na FE (flash messages, debug only messages) 
 => redis postgre reconnect
 => redirect (probably) to prevent resubmit of forms
 => b-tree indexes on columns we order by
-=> use promies instead of callbacks in collectioins
 => all forms validations
+=> foreign keys
 
 
 - Responsive page
 - passport fb/tw/g auth
 - split app.coffee
-- Google "I am not a robot" captcha for signup
-- DB init skript (default categories, admin user (conf name), all docs)
+- Google "I am not a robot" captcha for signup (reCAPTCHA)
 - Use default yaml config when its not present in custom yaml config
-- One postgre connectio? (pg-promise github)
-- Check why multer after csrf is a problem
+- One postgre connection? (pg-promise github)
+- What to do with multer and csurf when using form multipart?
 - Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
 - Fill form items when form is returne invalid
 - Add content-single instad of single content-right (kategorie, kluby)
-- Remove diacritics and other special characters from category/club links
+- Vlidate names of entities to contain only normal characters (validations in general)
 - created_at bigint -> timestamp
-- use ENV vars in yaml settings for db connects
 - Don't show "- Index" in title on lapiduch index route
-- Global template params (user, csfr)
 - tab indexes (new post form, ...)
 
 set NODE_TLS_REJECT_UNAUTHORIZED=0
@@ -39,12 +35,6 @@ PERF/SECURITY:
 
 
 TICKETS:
-- Update restart-db script and figure out how to run it on openshift (rhc portforwading works awesomely)
-- Openshift db ui (rhc portforwarding and pgadmin)
-- Openshift db info in yaml files (hand written parser of yaml strings)
-- Local and openshift redis for sessions
-- New club
-- Club section
 - Favorites
 - Mail
 - Openshift SSL

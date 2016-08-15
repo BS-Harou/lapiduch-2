@@ -1,0 +1,25 @@
+<% extend 'layout' %>
+
+<section class="section-favorites">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent">Oblíbené</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-single">
+			<div class="all-header">Všechny oblíbené</div>
+			<% for _, favorites of @favoritesMap : %>
+				<div class="clubs-header"><%= favorites.name %></div>
+				<% @clubsList = favorites.clubs %>
+				<% include 'partials/clubs-table' %>
+			<% end %>
+		</div>
+	</div>
+</section>

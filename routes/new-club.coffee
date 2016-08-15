@@ -17,7 +17,7 @@ router.get '/', (req, res, next) ->
 
 router.post '/', (req, res, next) ->
 	return next new Error 'Nejste prihlaseni' unless req.user
-	clubs.createFromForm req.body
+	clubs.createFromForm req.body, req.user
 	.then ->
 		res.redirect '/'
 	.catch next

@@ -1,0 +1,30 @@
+<form method="get" action="/kluby/hledat" class="form-inline search-by-content-form">
+	<div class="form-group">
+		<label for="search-content" class="form-control-label">
+			Text:
+		</label>
+		<input type="text" id="search-content" name="search" class="form-control form-control-sm" required />
+	</div>
+	<div class="form-group">
+		<input type="radio" id="search-everywhere" name="search-in" class="form-control form-control-sm" checked value="name-and-description" />
+		<label for="search-everywhere" class="form-control-label">
+			v názvu i popisu
+		</label>
+	</div>
+	<div class="form-group">
+		<input type="radio" id="search-in-name" name="search-in" class="form-control form-control-sm" value="name" />
+		<label for="search-in-name" class="form-control-label">
+			jen v názvu
+		</label>
+	</div>
+	<div class="form-group">
+		<input type="radio" id="search-in-description" name="search-in" class="form-control form-control-sm" value="description" />
+		<label for="search-in-description" class="form-control-label">
+			jen v popisu
+		</label>
+	</div>
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-secondary btn-sm">Hledat</button>
+	</div>
+</form>

@@ -22,6 +22,10 @@ routes =
 	newClub: require('./routes/new-club')
 	clubs: require('./routes/clubs')
 	activity: require('./routes/activity')
+	favorites: require('./routes/favorites')
+	search: require('./routes/search')
+	mail: require('./routes/mail')
+
 app = express()
 
 settings = require(__base + 'services/settings').getSettings()
@@ -95,6 +99,9 @@ app.use '/kategorie', routes.categories
 app.use '/novyklub', routes.newClub
 app.use '/kluby', routes.clubs
 app.use '/pritomni', routes.activity
+app.use '/oblibene', routes.favorites
+app.use '/hledani', routes.search
+app.use '/posta', routes.mail
 
 # catch 404 and forward to error handler
 app.use (req, res, next) ->

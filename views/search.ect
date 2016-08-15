@@ -1,0 +1,38 @@
+<% extend 'layout' %>
+
+<section class="section-signup">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent">Vyhledávání klubů podle moderátora nebo obsaženého textu.</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-left"></div>
+		<div class="content-right">
+			<div class="search-form-header">
+				Vyhledávání klubů
+			</div>
+			<p>Hledání klubů, které obsahují zadané znaky...</p>
+			<% include 'partials/search-by-moderator-form' %>
+			<div class="search-form-header">
+				Vyhledávání klubů
+			</div>
+			<p>Hledání klubů moderovaných určitým uživatelem...</p>
+			<% include 'partials/search-by-content-form' %>
+			<% if @clubsList : %>
+				<div class="all-header">Kluby které moderuje <%= @username %></div>
+				<% if @clubsList.length : %>
+					<% include 'partials/clubs-table' %>
+				<% else : %>
+					Žádné
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</section>

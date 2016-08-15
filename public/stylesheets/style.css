@@ -201,6 +201,38 @@ header li.highlighted-item a {
   width: 30rem;
 }
 /**
+ * HEADERS
+ */
+.all-header {
+  background: #f4f4f4;
+  padding-left: 0.438rem;
+  color: #a5a5a5;
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1;
+  border-top: solid 2px #e0e0e0;
+  border-bottom: solid 2px #e0e0e0;
+  margin-top: 1rem;
+}
+.search-form-header {
+  color: #a5a5a5;
+  font-weight: bold;
+  font-size: 1.1rem;
+  line-height: 1;
+  border-bottom: solid 2px #e0e0e0;
+  margin-top: 1.5rem;
+}
+.clubs-header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #006;
+  background: #e3e3fb;
+  line-height: 1.1;
+  padding: 0.125rem 0 0 1.12rem;
+  border-bottom: solid 3px #a3a3a3;
+  margin-top: 1.2rem;
+}
+/**
  * Clubs table
  */
 .clubs-table {
@@ -224,7 +256,8 @@ header li.highlighted-item a {
 /**
  * New Post form
  */
-.new-post-form {
+.new-post-form,
+.new-mail-form {
   max-width: 40rem;
 }
 /**
@@ -309,4 +342,28 @@ header li.highlighted-item a {
  */
 .search-post-form {
   width: 100%;
+}
+/**
+ * Activity
+ */
+.activity-list {
+  border-top: 1px solid #e9e9e9;
+  margin-top: 1rem;
+}
+.activity-item {
+  border-bottom: 1px solid #e9e9e9;
+  display: flex;
+  align-items: center;
+}
+.activity-item .activity-left {
+  flex: 0 0 auto;
+}
+.activity-item .activity-mid {
+  font-weight: bold;
+  padding: 0 1rem;
+  flex: 1 1 auto;
+}
+.activity-item .activity-right {
+  padding: 0 1rem;
+  flex: 0 0 auto;
 }

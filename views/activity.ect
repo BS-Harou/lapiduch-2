@@ -14,8 +14,25 @@
 
 	<div class="content">
 		<div class="content-single">
-			<% for user in @usersList : %>
-				<div><%= user.username %></div>
+			<div class="all-header">Uživatelé podle abecedy</div>
+			<% if @usersList?.length : %>
+				<div class="activity-list">
+				<% for user in @usersList : %>
+					<div class="activity-item">
+						<div class="activity-left">
+							<img src="<%= user.avatar %>" width="40" height="50" alt="<%= user.normUsername %>" />
+						</div>
+						<div class="activity-mid">
+							<%= user.username %>
+						</div>
+						<div class="activity-right">
+							<%= user.lastActivityFormatted %>
+						</div>
+					</div>
+				<% end %>
+				</div>
+			<% else : %>
+				Pusto prázdno
 			<% end %>
 		</div>
 	</div>

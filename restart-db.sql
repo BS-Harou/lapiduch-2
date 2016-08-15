@@ -174,3 +174,52 @@ CREATE TABLE public.posts (
 WITH (OIDS=FALSE);
 -- ALTER TABLE public.posts OWNER TO postgres;
 
+
+
+-- Sequence: public.favorites_id_seq
+
+CREATE SEQUENCE public.favorites_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+-- ALTER TABLE public.favorites_id_seq OWNER TO postgres;
+
+-- Table: public.favorites
+
+CREATE TABLE public.favorites (
+  id integer NOT NULL DEFAULT nextval('favorites_id_seq'::regclass),
+  user_id integer,
+  club_id integer,
+  type integer,
+  CONSTRAINT favorites_id_pk PRIMARY KEY (id)
+)
+WITH (OIDS=FALSE);
+-- ALTER TABLE public.favorites OWNER TO postgres;
+
+
+-- Sequence: public.mails_id_seq
+
+CREATE SEQUENCE public.mails_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+-- ALTER TABLE public.mails_id_seq OWNER TO postgres;
+
+-- Table: public.mails
+
+CREATE TABLE public.mails (
+  id integer NOT NULL DEFAULT nextval('mails_id_seq'::regclass),
+  title character varying(64),
+  message text,
+  created_at bigint,
+  user_id integer,
+  from_user_id integer,
+  to_user_id integer,
+  CONSTRAINT mails_id_pk PRIMARY KEY (id)
+)
+WITH (OIDS=FALSE);
+-- ALTER TABLE public.mails OWNER TO postgres;

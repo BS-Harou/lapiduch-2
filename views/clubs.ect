@@ -8,13 +8,23 @@
 		</div>
 
 		<div class="top-panel-right">
-			<p class="no-indent">Kluby <b>YYY</b> - spravuje DatBoy</p>
+			<p class="no-indent"><strong>Všechny kluby</strong> Hledání klubů, které obsahují zadané znaky...</p>
+			<% include 'partials/search-by-content-form' %>
 		</div>
 	</div>
 
 	<div class="content">
 		<div class="content-single">
-			<% include 'partials/clubs-table' %>
+			<% if @categoriesMap : %>
+				<div class="all-header">Všechny kluby</div>
+				<% for _, category of @categoriesMap : %>
+					<div class="clubs-header"><%= category.name %></div>
+					<% @clubsList = category.clubs %>
+					<% include 'partials/clubs-table' %>
+				<% end %>
+			<% else if @clubsList : %>
+				<% include 'partials/clubs-table' %>
+			<% end %>
 		</div>
 	</div>
 </section>

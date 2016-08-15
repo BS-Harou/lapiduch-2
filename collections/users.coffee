@@ -1,21 +1,45 @@
 security = require __base + 'services/security'
-mail = require __base + 'services/mail'
+email = require __base + 'services/email'
 cloudinary = require 'cloudinary'
 stream = require 'stream'
 normalize = require __base + 'services/normalize'
+moment = require 'moment'
 
 PERM =
 	USER: 'user'
 	ADMIN: 'admin'
 
 users =
-	findById: (id) ->
-		# magic
-		return
 
+	###*
+		@param {number} userId
+		@return {!Promise}
+	###
+	findById: (userId) ->
+		queryData =
+			userId: userId
+		db.oneOrNone("""
+			SELECT id, username, norm_username
+			FROM userId
+			WHERE id=${username} LIMIT 1
+		""", queryData)
+		.then (user) =>
+			@transformOut user
+
+	###*
+		@param {string} username
+		@return {!Promise}
+	###
 	findByUsername: (username) ->
-		# magic
-		return
+		queryData =
+			username: username
+		db.oneOrNone("""
+			SELECT id, username, norm_username
+			FROM users
+			WHERE username=${username} LIMIT 1
+		""", queryData)
+		.then (user) =>
+			@transformOut user
 
 	###*
 		@param {number} minutes
@@ -26,24 +50,65 @@ users =
 			activity: minutes * 60 * 1000
 			currentTime: Date.now()
 		db.query("""
-			SELECT id, username, norm_username
+			SELECT id, username, norm_username, avatar, last_activity
 			FROM users
 			WHERE ${currentTime}-last_activity<${activity}
 		""", queryData)
-		.then (users) ->
-			users.map (user) ->
-				id: user.id
-				username: user.username
-				normUsername: user.norm_username
+		.then (users) =>
+			users.map @transformOut
+
+	###*
+		@param {number} minutes
+		@return {!Promise}
+	###
+	findByClub: (clubId) ->
+		queryData =
+			clubId: clubId
+		db.query("""
+			SELECT users.id, users.username, users.norm_username
+			FROM users
+			INNER JOIN clubs_owners ON users.id=clubs_owners.user_id
+			WHERE clubs_owners.club_id=${clubId}
+		""", queryData)
+		.then (users) =>
+			users.map @transformOut
+				
+
+	###*
+		@param {!Object} data
+		@return {!Object}
+	###
+	transformOut: (data) ->
+		id: data.id
+		username: data.username
+		normUsername: data.norm_username
+		avatar: data.avatar
+		lastActivity: data.last_activity
+		lastActivityFormatted: moment(Number(data.last_activity)).format('DD.MM.YYYY h:mm:ss')
 
 	login: (username, password) ->
-		db.oneOrNone("SELECT * FROM users WHERE username=${username} OR email=${username}", { username: username })
+		db.oneOrNone("SELECT * FROM users WHERE username=${username} OR email=${username} LIMIT 1", { username: username })
 		.then (user) ->
 			throw new Error 'Neexistujici uzivatel' unless user
 			security.hash password, user.salt
 			.then (hash) ->
 				throw new Error 'Incorrect password.' unless user.password is hash
 				user
+
+	###*
+		@param {!Object} data
+		@return {!Promise}
+	###
+	favorite: (data) ->
+		queryData = Object.assign data
+		queryData.type or= 1
+		db.oneOrNone('SELECT * FROM favorites WHERE user_id=${userId} AND club_id=${clubId} LIMIT 1', queryData)
+		.then (fav) ->
+			if fav
+				queryData.favId = fav.id
+				db.none('UPDATE favorites SET type=${type} WHERE id=${favId}', queryData)
+			else
+				db.none('INSERT INTO favorites (club_id, user_id, type) VALUES(${clubId}, ${userId}, ${type})', queryData)
 
 	###*
 		@param {number} userId
@@ -102,7 +167,7 @@ users =
 			""", storeData)
 		.then ->
 			return null
-			mail.sendAuthMail storeData.email, storeData.activate
+			email.sendAuthMail storeData.email, storeData.activate
 
 	###*
 		@param {string} activate
@@ -126,7 +191,7 @@ users =
 				.catch (err) ->
 					reject err
 				return
-			, public_id: user.username
+			, public_id: user.norm_username
 
 			bufferStream = new stream.PassThrough()
 			bufferStream.end(buffer);

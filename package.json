@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Lapiduch reborn",
   "scripts": {
-    "start": "./node_modules/.bin/coffee ./bin/www",
-    "debug": "set DEBUG=lapiduch-2:* & coffee --nodejs --debug ./bin/www"
+    "start": "./node_modules/.bin/coffee ./bin/www.coffee",
+    "debug": "set DEBUG=lapiduch-2:* & coffee --nodejs --debug ./bin/www.coffee"
   },
   "repository": {
     "type": "git",

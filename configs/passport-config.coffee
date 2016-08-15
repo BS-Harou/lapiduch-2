@@ -17,8 +17,6 @@ module.exports = (passport) ->
 		# TODO User users collection to get use by id
 		db.oneOrNone("SELECT * FROM users WHERE id=${userId}", { userId: id })
 		.then (user) ->
-			console.log 'User found'
 			done null, user
 		.catch (err) ->
-			console.log 'User not found'
 			done err
