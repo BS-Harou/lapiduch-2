@@ -1,6 +1,7 @@
 express = require 'express'
 router = express.Router()
 users = require __base + 'collections/users'
+recaptcha = require __base + 'services/recaptcha'
 
 passport = require 'passport'
 LocalStrategy = require('passport-local').Strategy;
@@ -11,18 +12,22 @@ router.get '/registrace', (req, res, next) ->
 
 # POST registration details
 router.post '/registrace', (req, res, next) ->
-	users.createFromForm req.body
+	captchaData =
+		remoteip: req.connection.remoteAddress,
+		response: req.body['g-recaptcha-response']
+	recaptcha(captchaData).then ->
+		users.createFromForm req.body
 	.then (err) ->
 		res.render 'signup', { title: 'Registrace', success: yes }
 	.catch (err) ->
 		return next err if err # TODO
 		res.render 'signup', { title: 'Registrace', success: no, errorMessage: err?.toString() }
 
-# POST activate user
-router.post '/activate/:activate', (req, res, next) ->
-	users.activate(req.something)
+# GET activate user
+router.get '/aktivace/:user/:activate', (req, res, next) ->
+	users.activate(req.params.user, req.params.activate)
 	.then ->
-		res.render 'signup', { title: 'Registrace', success: !err, errorMessage: err?.toString() }
+		return res.redirect '/' # TODO: Sign in user
 	.catch next
 
 router.get '/odhlasit', (req, res) ->

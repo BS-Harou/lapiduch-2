@@ -117,6 +117,7 @@ CREATE TABLE public.clubs (
   name character varying(64),
   norm_name character varying(64),
   description character varying(128),
+  heading text,
   created_at bigint,
   CONSTRAINT clubs_id_pk PRIMARY KEY (id),
   CONSTRAINT clubs_norm_name_uq UNIQUE (norm_name)
@@ -223,3 +224,27 @@ CREATE TABLE public.mails (
 )
 WITH (OIDS=FALSE);
 -- ALTER TABLE public.mails OWNER TO postgres;
+
+
+
+-- Sequence: public.history_id_seq
+
+CREATE SEQUENCE public.history_id_seq
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+-- ALTER TABLE public.history_id_seq OWNER TO postgres;
+
+-- Table: public.history
+
+CREATE TABLE public.history (
+  id integer NOT NULL DEFAULT nextval('history_id_seq'::regclass),
+  user_id integer,
+  club_id integer,
+  post_id integer,
+  CONSTRAINT history_id_pk PRIMARY KEY (id)
+)
+WITH (OIDS=FALSE);
+-- ALTER TABLE public.history OWNER TO postgres;

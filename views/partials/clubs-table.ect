@@ -5,10 +5,16 @@
 		<tr>
 			<td>
 				<a href="/kluby/<%= club.normName %>"><%= club.name %></a>
-				<span class="club-desc"><%= club.name %></span>
+				<span class="club-desc"><%= club.description %></span>
 			</td>
 			<td class="posts-amount">
-				(0 příspěvků)
+				<% if club.postsCounts : %>
+				(<%= club.postsCount %> <% if club.postsCount in [2,3,4] : %>příspěvky<% else : %>příspěvků<% end %>)
+				<% else if club.visits : %>
+				(<%= club.visits %> <% if club.visits in [2,3,4] : %>návštěvy<% else : %>návštěv<% end %>)
+				<% else : %>
+				<%= club.createdAtFormatted %>
+				<% end  %>
 			</td>
 		</tr>
 	<% end %>

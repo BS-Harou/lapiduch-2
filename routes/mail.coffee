@@ -23,9 +23,14 @@ router.post '/pridat', (req, res, next) ->
 	mailData =
 		title: req.body.title
 		message: req.body.message
-		userId: req.user.id
-		clubId: club.id
-	mails.create mailData
+		fromUserId: req.user.id
+	users.findByUsername req.body.to
+	.then (user) ->
+		# TODO flash 'Uzivatel neexistuje'
+		# TODO fill in forms
+		return res.redirect '/posta' unless user
+		mailData.toUserId = user.id
+		mails.create mailData
 	.then ->
 		res.redirect '/posta'
 	.catch next

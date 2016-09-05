@@ -7,9 +7,14 @@ categories =
 		@return {!Promise}
 	###
 	getAll: ->
-		db.query('SELECT * FROM categories')
-		.then (storeData) =>
-			storeData.map @transformOut
+		db.query """
+			SELECT categories.*, COUNT(clubs.*) as clubs_count FROM categories
+			LEFT JOIN clubs ON categories.id=clubs.category_id
+			GROUP BY categories.id
+			ORDER BY categories.norm_name ASC
+		"""
+		.then (items) =>
+			items.map @transformOut
 
 	###*
 		@param {string|object} ident - id or normName of a category
@@ -21,6 +26,7 @@ categories =
 			ident: ident
 		db.one("SELECT * FROM categories WHERE ${searchBy~}=${ident}", searchData)
 		.then (item) =>
+			return null unless item
 			@transformOut item 
 
 	###*
@@ -43,6 +49,7 @@ categories =
 		normName: data.norm_name
 		description: data.description
 		createdAt: data.created_at
+		clubsCount: data.clubs_count
 
 	###*
 		@param {!Object} data

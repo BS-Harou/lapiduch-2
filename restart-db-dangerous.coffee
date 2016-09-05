@@ -34,6 +34,7 @@ async.waterfall [
 			avatar: 'https://res.cloudinary.com/lapiduch/image/upload/v1470778713/Len_y.png'
 			email: settings.admin.email
 			perm: users.PERM.ADMIN
+			activate: ''
 		})
 		.then -> done null
 		.catch done

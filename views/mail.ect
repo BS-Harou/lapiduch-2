@@ -8,13 +8,13 @@
 		</div>
 
 		<div class="top-panel-right">
-			<p>Soukromá pošta uživatele UUU.</p>
-			<p>Zobrazit jen přijaté vzkazy – jen odeslané vzkazy – jen vzkazy dosud nepřečtené příjemci – všechny vzkazy.</p>
+			<p>Soukromá pošta uživatele <%= @username %>.</p>
 		</div>
 	</div>
 
 	<div class="content">
 		<div class="content-single">
+			<% include 'partials/mail-panel' %>
 			<div class="club-forms">
 				<div class="club-forms-left">
 					<% include 'partials/search-post-form' %>

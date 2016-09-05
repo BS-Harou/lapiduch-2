@@ -7,10 +7,29 @@
 			</div>
 			<div class="post-right">
 				<div class="post-header">
-					<span class="post-username"><%= post.username %></span>
-					<span class="post-motto"><%= post.motto %></span>
-					<span class="post-date"><%= post.createdAt %>, <%= post.createdAtFormatted %></span>
-					<span class="post-new">Nové</span>
+					<div class="fixed-flex post-username">
+						<%= post.username %>
+					</div>
+
+					<% if post.motto : %>
+					<div class="fixed-flex post-motto">
+						<%= post.motto %>
+					</div>
+					<% end %>
+
+					<div class="fixed-flex post-date" title="<%= post.createdAt %>">
+						<%= post.createdAtFormatted %>
+					</div>
+					<div class="fixed-flex post-new">
+						Nové
+					</div>
+					<div class="dynamic-flex"></div>
+					<div class="fixed-flex post-id">
+						<%= post.id %>
+					</div>
+					<div class="fixed-flex post-remove">
+						<input type="checkbox" name="post[]" />
+					</div>
 				</div>
 				<div class="post-main">
 					<div class="post-title"><%= post.title %></div>

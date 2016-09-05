@@ -1,0 +1,23 @@
+<% extend 'layout' %>
+
+<section class="section-club-settings">
+
+	<div class="top-panel">
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
+
+		<div class="top-panel-right">
+			<p class="no-indent">
+				Klub <b><%= @clubName %></b> (kategorie <%= @categoryName %>)
+			</p>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="content-single">
+			<% include 'partials/club-panel' %>
+			<% include 'partials/club-settings-form' %>
+		</div>
+	</div>
+</section>

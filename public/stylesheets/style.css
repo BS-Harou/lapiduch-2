@@ -58,6 +58,18 @@ header li.highlighted-item a {
   padding: 0;
   margin: 0;
 }
+.input-group-addon {
+  min-width: 2rem;
+}
+.fa-intersex {
+  font-weight: bold;
+}
+.fixed-flex {
+  flex: 0 0 auto;
+}
+.dynamic-flex {
+  flex: 1 1 auto;
+}
 /**
  * Top panel
  */
@@ -279,8 +291,10 @@ header li.highlighted-item a {
   flex: 1 1 auto;
 }
 .posts-list .post-header {
-  padding: 0.1rem 1rem;
+  padding: 0rem 1rem;
   background: #e7eff7;
+  display: flex;
+  align-items: baseline;
 }
 .posts-list .post-username {
   color: #5a5a5a;
@@ -291,18 +305,26 @@ header li.highlighted-item a {
   font-style: italic;
   color: #313131;
   font-size: 0.8rem;
+  margin-left: 0.4rem;
 }
 .posts-list .post-date {
   color: #313131;
   font-size: 0.8rem;
+  margin-left: 0.4rem;
 }
 .posts-list .post-new {
   color: #842163;
   font-size: 0.8rem;
+  margin-left: 0.4rem;
 }
 .posts-list .post-id {
   color: #a5adc6;
+  align-self: center;
   font-size: 0.8rem;
+}
+.posts-list .post-remove {
+  margin-left: 0.4rem;
+  align-self: baseline;
 }
 .posts-list .post-main {
   padding: 0.3rem 1rem 1.5rem 1rem;
@@ -327,7 +349,7 @@ header li.highlighted-item a {
   display: flex;
   background: #e8edf1;
   padding: 0.5rem 0.3rem;
-  margin-bottom: 1rem;
+  margin-top: 0.2rem;
   border-radius: 1rem;
 }
 .club-forms .club-forms-left {
@@ -366,4 +388,16 @@ header li.highlighted-item a {
 .activity-item .activity-right {
   padding: 0 1rem;
   flex: 0 0 auto;
+}
+/**
+ * Pagination
+ */
+.post-pagination {
+  margin-top: 1rem;
+}
+/**
+ * Mail
+ */
+.avatar-greyed {
+  opacity: 0.5;
 }

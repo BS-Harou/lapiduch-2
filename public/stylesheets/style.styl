@@ -50,10 +50,21 @@ header
 	padding-left: 0 !important
 	padding-right: 0 !important
 	
-.no-indent {
-	padding: 0;
-	margin: 0;
-}
+.no-indent
+	padding: 0
+	margin: 0
+
+.input-group-addon
+	min-width: 2rem
+	
+.fa-intersex
+	font-weight: bold
+	
+.fixed-flex
+	flex: 0 0 auto
+	
+.dynamic-flex
+	flex: 1 1 auto
 
 
 /**
@@ -275,8 +286,10 @@ header
 		flex: 1 1 auto
 		
 	.post-header
-		padding: 0.1rem 1rem
+		padding: 0rem 1rem
 		background: rgb(231, 239, 247)
+		display: flex
+		align-items: baseline
 		
 	.post-username
 		color: rgb(90, 90, 90)
@@ -287,18 +300,26 @@ header
 		font-style: italic
 		color: rgb(49, 49, 49)
 		font-size: 0.8rem
+		margin-left: 0.4rem
 		
 	.post-date
 		color: rgb(49, 49, 49)
 		font-size: 0.8rem
+		margin-left: 0.4rem
 		
 	.post-new
 		color: rgb(132, 33, 99)
 		font-size: 0.8rem
+		margin-left: 0.4rem
 		
 	.post-id
 		color: rgb(165, 173, 198)
+		align-self: center
 		font-size: 0.8rem
+		
+	.post-remove
+		margin-left: 0.4rem
+		align-self: baseline
 		
 	.post-main
 		padding: 0.3rem 1rem 1.5rem 1rem
@@ -324,7 +345,7 @@ header
 	display: flex
 	background: #e8edf1
 	padding: 0.5rem 0.3rem
-	margin-bottom: 1rem
+	margin-top: 0.2rem
 	border-radius: 1rem
 
 	.club-forms-left
@@ -363,3 +384,15 @@ header
 	.activity-right
 		padding: 0 1rem
 		flex: 0 0 auto
+		
+/**
+ * Pagination
+ */
+.post-pagination
+	margin-top: 1rem
+	
+/**
+ * Mail
+ */
+.avatar-greyed
+	opacity: 0.5

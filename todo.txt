@@ -2,9 +2,14 @@
 => posilani chyb z BE na FE (flash messages, debug only messages) 
 => redis postgre reconnect
 => redirect (probably) to prevent resubmit of forms
-=> b-tree indexes on columns we order by
 => all forms validations
+=> Production reCAPTCHA, template public key from settings (recaptcha.formElement())
+
+DB
+=> on n:m tables use e.g. club_id:user_id as primary key isntead of id
 => foreign keys
+=> b-tree indexes on columns we order by
+=> NOT NULL everhwere where it should be
 
 
 - Responsive page
@@ -19,7 +24,6 @@
 - Add content-single instad of single content-right (kategorie, kluby)
 - Vlidate names of entities to contain only normal characters (validations in general)
 - created_at bigint -> timestamp
-- Don't show "- Index" in title on lapiduch index route
 - tab indexes (new post form, ...)
 
 set NODE_TLS_REJECT_UNAUTHORIZED=0

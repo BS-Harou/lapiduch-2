@@ -1,4 +1,5 @@
 assert = require 'assert'
+moment = require 'moment'
 normalize = require __base + 'services/normalize'
 
 FAVORITES_TYPES =
@@ -38,8 +39,11 @@ clubs =
 	###
 	getAllInCategories: ->
 		db.query("""
-			SELECT clubs.*, categories.name as category_name, categories.norm_name as category_norm_name
-			FROM clubs INNER JOIN categories ON clubs.category_id=categories.id
+			SELECT clubs.*, categories.name as category_name, categories.norm_name as category_norm_name, COUNT(posts.id) as posts_count
+			FROM clubs 
+			INNER JOIN categories ON clubs.category_id=categories.id
+			LEFT JOIN posts ON clubs.id=posts.club_id
+			GROUP BY clubs.id, categories.id
 			ORDER BY categories.norm_name ASC
 		""")
 		.then (clubs) =>
@@ -60,9 +64,12 @@ clubs =
 		queryData =
 			userId: userId
 		db.query("""
-			SELECT clubs.*, favorites.type as favorites_type
-			FROM clubs INNER JOIN favorites ON clubs.id=favorites.club_id
+			SELECT clubs.*, favorites.type as favorites_type, COUNT(posts.id) as posts_count
+			FROM clubs
+			INNER JOIN favorites ON clubs.id=favorites.club_id
+			LEFT JOIN posts ON clubs.id=posts.club_id
 			WHERE favorites.user_id=${userId}
+			GROUP BY clubs.id, favorites.id
 			ORDER BY favorites.type DESC, clubs.norm_name ASC
 		""", queryData)
 		.then (clubs) =>
@@ -89,6 +96,7 @@ clubs =
 			WHERE clubs.${searchBy~}=${ident}
 		""", searchData)
 		.then (item) =>
+			return null unless item
 			@transformOut item
 
 	###*
@@ -96,7 +104,11 @@ clubs =
 		@return {!Promise}
 	###
 	findByCategory: (catId) ->
-		db.query('SELECT * FROM clubs WHERE category_id=${catId}', { catId })
+		db.query("""
+			SELECT * FROM clubs WHERE category_id=${catId}, COUNT(posts.id) as posts_count
+			LEFT JOIN posts ON clubs.id=posts.club_id
+			GROUP BY clubs.id
+		""", { catId })
 		.then (items) =>
 			items.map @transformOut
 
@@ -126,9 +138,65 @@ clubs =
 		.then (items) =>
 			items.map @transformOut
 
+	###*
+		@param {boolean=} all
+		@return {!Promise}
+	###
+	findMostVisited: (all = no) ->
+		# TODO only today
+		limit = if all then 'LIMIT 200' else 'LIMIT 10'
+		db.query """
+			SELECT clubs.*, COUNT(history.*) as visits FROM clubs
+			LEFT JOIN history ON clubs.id=history.club_id
+			GROUP BY clubs.id
+			ORDER BY visits DESC, clubs.created_at DESC
+			#{limit}
+		"""
+		.then (items) =>
+			items.map @transformOut
 
-	findFavoritesByUser: (userId) ->
-		return
+	###*
+		@param {boolean=} all
+		@return {!Promise}
+	###
+	findMostPosted: (all = no) ->
+		# TODO only today
+		limit = if all then 'LIMIT 200' else 'LIMIT 10'
+		db.query """
+			SELECT clubs.*, COUNT(posts.*) as posts_count FROM clubs
+			LEFT JOIN posts ON clubs.id=posts.club_id
+			GROUP BY clubs.id
+			ORDER BY posts_count DESC, clubs.created_at DESC
+			#{limit}
+		"""
+		.then (items) =>
+			items.map @transformOut
+
+	###*
+		@param {boolean=} all
+		@return {!Promise}
+	###
+	findMostNew: (all = no) ->
+		limit = if all then 'LIMIT 200' else 'LIMIT 10'
+		db.query """
+			SELECT clubs.* FROM clubs
+			ORDER BY clubs.created_at DESC
+			#{limit}
+		"""
+		.then (items) =>
+			items.map @transformOut
+
+	###*
+		@param {string|number} ident
+		@param {!Object} data
+	###
+	update: (ident, data) ->
+		@find ident
+		.then (club) ->
+			throw new Error 'No such club' unless club
+			# TODO transform data (from form)
+			data.id = clubs.id
+			db.none('UPDATE clubs SET description=${description}, heading=${heading} WHERE id=${id}', data)
 
 	###*
 		@param {data} formData
@@ -162,12 +230,16 @@ clubs =
 		name: data.name
 		normName: data.norm_name
 		createdAt: data.created_at
+		createdAtFormatted: moment(Number(data.created_at)).format('DD.MM.YYYY h:mm')
 		description: data.description
+		heading: data.heading
 		categoryId: data.category_id
 		categoryName: data.category_name
 		categoryNormName: data.category_norm_name
 		favoritesType: data.favorites_type
 		favoritesTypeData: FAVORITES_TYPES_LIST[data.favorites_type - 1]
+		visits: data.visits
+		postsCount: data.posts_count
 
 	###*
 		@param {!Object} t transaction

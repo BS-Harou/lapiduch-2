@@ -4,6 +4,7 @@ cloudinary = require 'cloudinary'
 stream = require 'stream'
 normalize = require __base + 'services/normalize'
 moment = require 'moment'
+uuid = require 'node-uuid'
 
 PERM =
 	USER: 'user'
@@ -12,19 +13,21 @@ PERM =
 users =
 
 	###*
-		@param {number} userId
+		@param {string|number} ident - id or normName of a club
 		@return {!Promise}
 	###
-	findById: (userId) ->
+	find: (ident) ->
 		queryData =
-			userId: userId
-		db.oneOrNone("""
-			SELECT id, username, norm_username
-			FROM userId
-			WHERE id=${username} LIMIT 1
+			searchBy: if typeof ident is 'number' then 'id' else 'norm_username'
+			ident: ident
+		db.one("""
+			SELECT id, username, norm_username, activate, motto, avatar
+			FROM users
+			WHERE users.${searchBy~}=${ident}
 		""", queryData)
-		.then (user) =>
-			@transformOut user
+		.then (item) =>
+			return null unless item
+			@transformOut item
 
 	###*
 		@param {string} username
@@ -38,8 +41,9 @@ users =
 			FROM users
 			WHERE username=${username} LIMIT 1
 		""", queryData)
-		.then (user) =>
-			@transformOut user
+		.then (item) =>
+			return null unless item
+			@transformOut item
 
 	###*
 		@param {number} minutes
@@ -65,31 +69,48 @@ users =
 		queryData =
 			clubId: clubId
 		db.query("""
-			SELECT users.id, users.username, users.norm_username
+			SELECT users.id, users.username, users.norm_username, users.avatar, clubs_owners.level
 			FROM users
 			INNER JOIN clubs_owners ON users.id=clubs_owners.user_id
 			WHERE clubs_owners.club_id=${clubId}
 		""", queryData)
 		.then (users) =>
 			users.map @transformOut
-				
+
+	###*
+		@param {number} clubId
+		@param {number} level
+		@return {!Promise}
+	###
+	updateClubPermissions: (clubId, userId, level) ->
+		queryData =
+			clubId: clubId
+			userId: userId
+			level: level
+		db.none("""
+			UPDATE clubs_owners SET level=${level} WHERE club_id=${clubId} AND user_id=${userId}
+		""", queryData)
 
 	###*
 		@param {!Object} data
 		@return {!Object}
 	###
 	transformOut: (data) ->
-		id: data.id
+		id: Number data.id
 		username: data.username
 		normUsername: data.norm_username
+		activate: data.activate
 		avatar: data.avatar
-		lastActivity: data.last_activity
+		motto: data.motto
+		level: Number data.level
+		lastActivity: Number data.last_activity
 		lastActivityFormatted: moment(Number(data.last_activity)).format('DD.MM.YYYY h:mm:ss')
 
 	login: (username, password) ->
 		db.oneOrNone("SELECT * FROM users WHERE username=${username} OR email=${username} LIMIT 1", { username: username })
 		.then (user) ->
 			throw new Error 'Neexistujici uzivatel' unless user
+			throw new Error 'Neaktivní uživatel' if user.activate
 			security.hash password, user.salt
 			.then (hash) ->
 				throw new Error 'Incorrect password.' unless user.password is hash
@@ -153,7 +174,7 @@ users =
 			sex: data.sex
 			createdAt: Date.now()
 			perm: data.perm or PERM.USER
-			activate: security.hashString data.email
+			activate: if data.hasOwnProperty 'activate' then data.activate else uuid.v4()
 			avatar: data.avatar or ''
 
 		security.hash data.password
@@ -166,16 +187,22 @@ users =
 				VALUES(${username}, ${normUsername}, ${email}, ${password}, ${salt}, ${sex}, ${createdAt}, ${perm}, ${activate}, ${avatar})
 			""", storeData)
 		.then ->
-			return null
-			email.sendAuthMail storeData.email, storeData.activate
+			return unless storeData.activate?.length
+			email.sendAuthMail storeData.email, storeData.activate, storeData.normUsername
 
 	###*
+		@param {string} userIdent
 		@param {string} activate
 		@param {!Promise}
 	###
-	activate: (activate) ->
-		db.none("UPDATE users SET activate='' WHERE activate=$1", activate)
-
+	activate: (userIdent, activate) ->
+		@find userIdent
+		.then (user) ->
+			throw new Error 'Invalid user' unless user
+			throw new Error 'No activation string' unless activate?.length
+			throw new Error "Invalid activation link" unless activate is user.activate
+			db.none("UPDATE users SET activate='' WHERE id=$1", user.id)	
+		
 	###*
 		@param {!Buffer} buffer
 		@param {!Object} user

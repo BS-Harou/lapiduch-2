@@ -25,25 +25,29 @@
 				<div class="row">
 					<div class="top-column col-md-4">
 						<div class="simple-heading">Nejnavštěvovanější klub</div>
+						<% @topConfig = list: @topViewedList, colName: 'Počet návštěv', colKey: 'visits' %>
 						<% include 'partials/top-clubs-list' %>
 						<div class="top-link-all">
-							<a href="/">Celé pořadí...</a>
+							<a href="/kluby/nejnavstevovanejsi">Celé pořadí...</a>
 						</div>
 					</div>
 
 					<div class="top-column col-md-4">
 						<div class="simple-heading">Nejpřispívanější klub</div>
+						<% @topConfig = list: @topPostedList, colName: 'Počet příspěvků', colKey: 'postsCount' %>
 						<% include 'partials/top-clubs-list' %>
 						<div class="top-link-all">
-							<a href="/">Celé pořadí...</a>
+							<a href="/kluby/nejprispivanejsi">Celé pořadí...</a>
 						</div>
 					</div>
 
 					<div class="top-column col-md-4">
 						<div class="simple-heading">Nejnovější klub</div>
+						<% @topConfig = list: @topNewList, colName: 'Vytvořen', colKey: 'createdAtFormatted' %>
+						<% @topList = @topNewList %>
 						<% include 'partials/top-clubs-list' %>
 						<div class="top-link-all">
-							<a href="/">Celé pořadí...</a>
+							<a href="/kluby/nejnovejsi">Celé pořadí...</a>
 						</div>
 					</div>
 				</div>

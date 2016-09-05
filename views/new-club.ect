@@ -3,7 +3,9 @@
 <section class="section section-new-club">
 
 	<div class="top-panel">
-		<div class="top-panel-left"></div>
+		<div class="top-panel-left">
+			<% include 'partials/login-form' %>
+		</div>
 
 		<div class="top-panel-right">
 			<p class="no-indent"><b>Založení nového diskusního klubu</b></p>
@@ -16,26 +18,26 @@
 				<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
 				<div class="container">
 					<div class="form-group row">
-						<label for="club-name" class="col-sm-4 form-control-label">
+						<label for="club-name" class="col-xs-4 form-control-label">
 							<small>Název klubu:</small>
 						</label>
-						<div class="col-sm-8">
+						<div class="col-xs-8">
 							<input type="text" id="club-name" name="clubName" class="form-control form-control-sm" required pattern=".{3,50}" maxlength="50" />
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="club-desc" class="col-sm-4 form-control-label">
+						<label for="club-desc" class="col-xs-4 form-control-label">
 							<small>Popis klubu:</small>
 						</label>
-						<div class="col-sm-8">
+						<div class="col-xs-8">
 							<input type="text" id="club-desc" name="clubDesc" class="form-control form-control-sm" required pattern=".{3,50}" maxlength="50" />
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="club-category" class="col-sm-4 form-control-label">
+						<label for="club-category" class="col-xs-4 form-control-label">
 							<small>Kategorie:</small>
 						</label>
-						<div class="col-sm-8">
+						<div class="col-xs-8">
 							<select id="club-category" name="clubCategory" class="form-control form-control-sm" required>
 								<% for category in @categoriesList : %>
 									<option value="<%= category.id %>"><%= category.name %></option>
@@ -44,7 +46,7 @@
 						</div>
 					</div>
 					<div class="form-group row">
-						<div class="col-sm-offset-4 col-sm-8 login-control">
+						<div class="offset-xs-4 col-xs-8 login-control">
 							<button type="submit" class="btn btn-secondary btn-sm">Vytvořit</button>
 						</div>
 					</div>

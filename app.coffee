@@ -60,16 +60,21 @@ app.use helmet()
 app.use helmet.contentSecurityPolicy
   directives: 
     defaultSrc: ["'self'"],
-    scriptSrc: ["'self'"],
-    styleSrc: ["'self'"],
+    scriptSrc: ["'self'", "https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/"],
+    styleSrc: ["'self'",  "'unsafe-inline'"],
+    frameSrc: ["'self'", "https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/"],
     imgSrc: ["'self'", 'data:', '*'],
-    sandbox: ['allow-forms', 'allow-scripts'],
+    sandbox: ['allow-forms', 'allow-scripts', 'allow-same-origin'],
     reportUri: '/report-violation', # TODO, how it works, add the route
     objectSrc: []
 app.use logger('dev')
 app.use bodyParser.json()
 app.use bodyParser.urlencoded(extended: false)
 app.use cookieParser()
+app.use '/health', (req, res, next) ->
+	res.writeHead(200);
+	res.end()
+	return
 app.use require('stylus').middleware(path.join(__base, 'public'))
 app.use express.static(path.join(__base, 'public'))
 app.use session({
@@ -92,6 +97,7 @@ app.use (req, res, next) ->
 	return
 app.use '*', routes.all
 app.use '/bootstrap', express.static(__base + '/node_modules/bootstrap/dist/')
+app.use '/font-awesome', express.static(__base + '/node_modules/font-awesome/')
 app.use '/', routes.index
 app.use '/auth', routes.auth
 app.use '/nastaveni', routes.settings

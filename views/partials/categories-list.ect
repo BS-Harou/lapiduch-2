@@ -5,7 +5,7 @@
 	<ul>
 		<% for cat in @categoriesList : %>
 		<li>
-			<a href="/kategorie/<%= cat.normName %>"><%= cat.name %> <span class="cat-amount">( 12 )</span></a>
+			<a href="/kategorie/<%= cat.normName %>"><%= cat.name %> <span class="cat-amount">(<%= cat.clubsCount %>)</span></a>
 		</li>
 		<% end %>
 	</ul>

@@ -14,21 +14,25 @@
 					<a href="/posta/?to=<%= moderator.normUsername %>"><%= moderator.username %></a>
 				<% end %>
 			</p>
-			<p>Tohle je nejaky popis klubu, ktery vlastne ale vubec neexistuje. Problem?</p>
+			<p class="no-indent">
+				<%= @clubHeading %>
+			</p>
 		</div>
 	</div>
 
 	<div class="content">
 		<div class="content-single">
-			<% include 'partials/club-panel' %>
-			<div class="club-forms">
-				<div class="club-forms-left">
-					<% include 'partials/search-post-form' %>
+			<% if @user : %>
+				<% include 'partials/club-panel' %>
+				<div class="club-forms">
+					<div class="club-forms-left">
+						<% include 'partials/search-post-form' %>
+					</div>
+					<div class="club-forms-right">
+						<% include 'partials/new-post-form' %>
+					</div>
 				</div>
-				<div class="club-forms-right">
-					<% include 'partials/new-post-form' %>
-				</div>
-			</div>
+			<% end %>
 			<% include 'partials/pagination' %>
 			<% include 'partials/posts-list' %>
 			<% include 'partials/pagination' %>

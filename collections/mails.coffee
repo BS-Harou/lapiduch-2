@@ -17,8 +17,9 @@ posts =
 		params =  { userId, filterFrom: Number(options.from), filterTo: Number(options.to) }
 		db.query("""
 			SELECT mails.*, users.username as username, users.avatar as avatar, users.motto as motto
-			FROM mails LEFT JOIN users ON mails.user_id=users.id
+			FROM mails LEFT JOIN users ON mails.from_user_id=users.id OR mails.to_user_id=users.id
 			WHERE mails.user_id=${userId}
+			AND users.id<>mails.user_id
 			#{filters}
 			ORDER BY mails.created_at DESC, mails.id DESC
 			LIMIT 15
@@ -42,7 +43,6 @@ posts =
 		@return {!Object}
 	###
 	transformOut: (data) ->
-		otherUser = if data.user_id is data.from_user_id then data.to_user_id else data.from_user_id
 		id: data.id
 		title: data.title
 		message: data.message
@@ -51,6 +51,7 @@ posts =
 		userId: data.user_id
 		fromUserId: data.from_user_id
 		toUserId: data.to_user_id
+		dir: if data.user_id is data.from_user_id then 'pro' else 'od'
 		username: data.username
 		avatar: data.avatar
 		motto: data.motto
@@ -62,8 +63,6 @@ posts =
 	create: (data) ->
 		# prevent saving two same posts in a row
 		storeData = @transformIn data
-
-		
 
 		db.tx (t) ->
 			t.batch [

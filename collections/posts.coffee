@@ -1,5 +1,6 @@
 assert = require 'assert'
 moment = require 'moment'
+
 posts =
 
 	###*
@@ -29,7 +30,7 @@ posts =
 			WHERE club_id=${clubId}
 			#{filters}
 			ORDER BY posts.created_at DESC, posts.id DESC
-			LIMIT 15
+			LIMIT 5
 		""", params)
 		.then (items) =>
 			items.map @transformOut

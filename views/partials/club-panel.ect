@@ -1,10 +1,16 @@
 <div class="action-panel club-panel">
 	<ul>
 		<li>
-			<a href="/klub/xxx/nastaveni">Nastavení klubu</a>
+			<a href="/kluby/<%= @clubIdent %>">Příspěvky</a>
 		</li>
 		<li>
-			<a href="/klub/xxx/prava">Nastavení práv</a>
+			<a href="/kluby/<%= @clubIdent %>/nastaveni">Nastavení klubu</a>
+		</li>
+		<li>
+			<a href="/kluby/<%= @clubIdent %>/prava">Nastavení práv</a>
+		</li>
+		<li>
+			<a href="/kluby/<%= @clubIdent %>/statistiky">Statistiky</a>
 		</li>
 	</ul>
 </div>

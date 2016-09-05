@@ -1,8 +1,11 @@
 nodemailer = require 'nodemailer'
 hashString = require(__base + 'services/security').hashString
 settings = require(__base + 'services/settings').getSettings()
+ECT = require 'ect'
 
-smtpLogin = ''
+mailRenderer = ECT(watch: true, root: __base + '/views/mail', ext: '.ect')
+
+
 transporter = nodemailer.createTransport settings.mail.smtp
 
 FROM = '"Lapiduch" <lapiduch@martinkadlec.eu>'
@@ -22,20 +25,20 @@ mail =
 		TODO util to get absolute lapiduch url, use actual working url
 		@param {string} to
 		@param {string} activate
+		@param {string} normUsername
 		@return {!Promise}
 	####
-	sendAuthMail: (to, activate) ->
+	sendAuthMail: (to, activate, normUsername) ->
 
-		link = "#{settings.url}/auth/activate/#{activate}"
+		# link = "#{settings.url}/auth/activate/#{activate}"
+		activationLink = "http://lapiduch.martinkadlec.eu/auth/aktivace/#{normUsername}/#{activate}"
 
 		mailOptions =
 			from: settings.mail.from
 			to: to
-			subject: 'Lapiduch - Potvrzení registrace'
-			text: """
-				Děkujeme za registraci na diskuzním serveru lapiduch.cz. Potvrďte prosím svou registraci kliknutím na následující odkaz:\n\n
-				#{hashString(link)}
-			"""
+			subject: 'Lapiduch - Aktivace'
+			text: mailRenderer.render('activation-plain', { site: 'http://lapiduch.martinkadlec.eu/', activationLink })
+			html: mailRenderer.render('activation', { site: 'http://lapiduch.martinkadlec.eu/', activationLink })
 		@sendMail mailOptions
 
 module.exports = mail
