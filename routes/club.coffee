@@ -3,68 +3,37 @@ clubs = require __base + 'collections/clubs'
 posts = require __base + 'collections/posts'
 users = require __base + 'collections/users'
 history = require __base + 'collections/history'
+normalize = require __base + 'services/normalize'
+Promise = require 'bluebird'
 router = express.Router()
 
-router.get '/', (req, res, next) ->
-	clubs.getAllInCategories()
-	.then (categoriesMap) ->
-		params =
-			title: 'Kluby'
-			categoriesMap: categoriesMap
-		res.render 'clubs', params
-	.catch next
-
-router.get '/hledat', (req, res, next) ->
-	searchData =
-		search: String(req.query.search).trim()
-		searchIn: String(req.query['search-in']).trim()
-	unless searchData.search and searchData.searchIn
-		return res.redirect '/kluby'
-	clubs.findByContent searchData
-	.then (clubsList) ->
-		params =
-			title: 'Kluby'
-			clubsList: clubsList
-		res.render 'clubs', params
-	.catch next
-
-#
-# ALL TOP CLUBS
-#
-router.get '/nejprispivanejsi', (req, res, next) ->
-	clubs.findMostPosted(yes)
-	.then (clubsList) ->
-		params =
-			title: 'Nejpřispívaněší'
-			clubsList: clubsList
-		res.render 'clubs', params
-	.catch next
-
-router.get '/nejnavstevovanejsi', (req, res, next) ->
-	clubs.findMostVisited(yes)
-	.then (clubsList) ->
-		params =
-			title: 'Nejnavštěvovanější'
-			clubsList: clubsList
-		res.render 'clubs', params
-	.catch next
-
-router.get '/nejnovejsi', (req, res, next) ->
-	clubs.findMostNew(yes)
-	.then (clubsList) ->
-		params =
-			title: 'Nejnovější'
-			clubsList: clubsList
-		res.render 'clubs', params
-	.catch next
-
-
-# TODO move to /klub route
+getFindOptions = (query, authorId, lastPostId) ->
+	params =
+		to: query.to
+		from: query.from ? lastPostId
+	params.userId = authorId if authorId
+	params.text = query.text if query.text
+	params
 
 router.get '/:club', (req, res, next) ->
-	params = {}
-	lastPostId = null;
-	clubs.find req.params.club
+	params =
+		author: req.query.author
+		text: req.query.text
+
+	lastPostId = null
+	authorId = null
+
+	promise = Promise.resolve()
+	if req.query.author
+		normAuthor = normalize req.query.author
+		promise = users.find normAuthor
+		.then (user) ->
+			authorId = user?.id
+			# To show 'Following'/'Preceding' link on each post
+			params.isFiltered = !!(authorId or req.query.text)
+
+	promise.then ->
+		clubs.find req.params.club
 	.then (club) ->
 		params.clubId = club.id
 		params.clubName = club.name
@@ -76,12 +45,9 @@ router.get '/:club', (req, res, next) ->
 			history.find req.user.id, club.id
 			.then (visit) ->
 				lastPostId = visit?.postId
-				posts.findByClub club.id, {
-					to: req.query.to
-					from: req.query.from ? lastPostId
-				}
+				posts.findByClub club.id, getFindOptions req.query, authorId, lastPostId
 		else
-			posts.findByClub club.id, req.query
+			posts.findByClub club.id, getFindOptions req.query
 	.then (postsList) ->
 		postsList.forEach((post) -> post.isNew = post.id > lastPostId) if lastPostId
 		params.postsList = postsList
@@ -115,7 +81,7 @@ router.post '/:club/pridat', (req, res, next) ->
 			
 		posts.create postData
 	.then ->
-		res.redirect '/kluby/' + req.params.club
+		res.redirect '/klub/' + req.params.club
 	.catch next
 
 router.get '/:club/oblibit', (req, res, next) ->
@@ -127,7 +93,7 @@ router.get '/:club/oblibit', (req, res, next) ->
 			clubId: club.id
 		users.favorite favData
 	.then ->
-		res.redirect '/kluby/' + req.params.club
+		res.redirect '/klub/' + req.params.club
 	.catch next
 
 #
@@ -153,7 +119,7 @@ router.post '/:club/nastaveni', (req, res, next) ->
 
 	clubs.update req.params.club, req.body
 	.then ->
-		res.redirect '/kluby/' + req.params.club + '/nastaveni'
+		res.redirect '/klub/' + req.params.club + '/nastaveni'
 	.catch next
 
 router.get '/:club/prava', (req, res, next) ->
@@ -180,10 +146,7 @@ router.post '/:club/prava', (req, res, next) ->
 	.then (club) ->
 		users.updateClubPermissions club.id, req.user.id, req.body.level
 	.then ->
-		res.redirect '/kluby/' + req.params.club + '/prava'
+		res.redirect '/klub/' + req.params.club + '/prava'
 	.catch next
-
-
-
 
 module.exports = router

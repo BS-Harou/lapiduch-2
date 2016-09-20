@@ -10,7 +10,7 @@ posts =
 		db.query('SELECT * FROM posts')
 		.then (items) =>
 			items.map @transformOut
-			
+
 	###*
 		@param {number} clubId
 		@param {!Object=} options
@@ -22,11 +22,15 @@ posts =
 			delete options.from
 
 		filterVal = options.to ? options.from
-		params = { clubId, limit: 15, filterId: Number(filterVal) }
+		params = { clubId, limit: 15, filterId: Number(filterVal), userId: options.userId, text: options.text }
 		
 		# Select posts based on passed operator
 		postsQueryFactory = (filter = '', order = 'DESC') ->
-			"SELECT * FROM posts WHERE #{filter} club_id=${clubId} ORDER BY created_at #{order}, id #{order} LIMIT ${limit}"
+			implicitFilter = ''
+			implicitFilter += " message LIKE '%${text#}%' AND" if options.text?
+			implicitFilter += " user_id=${userId#} AND" if options.userId?
+
+			"SELECT * FROM posts WHERE #{implicitFilter} #{filter} club_id=${clubId} ORDER BY created_at #{order}, id #{order} LIMIT ${limit}"
 
 		# Select posts both larger and smaller than filterId
 		# This is neccesery for cases when there isn't enough posts in one direction

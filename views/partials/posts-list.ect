@@ -20,9 +20,18 @@
 					<div class="fixed-flex post-date" title="<%= post.createdAt %>">
 						<%= post.createdAtFormatted %>
 					</div>
+					<% if post.isNew : %>
 					<div class="fixed-flex post-new">
 						Nové
 					</div>
+					<% end %>
+					<% if @isFiltered : %>
+					<div class="fixed-flex post-filtered-links">
+						<a href="/klub/<%= @clubIdent %>/?to=<%= post.id %>">Předcházející</a>
+						<span>|</span>
+						<a href="/klub/<%= @clubIdent %>/?from=<%= post.id %>">Následující</a>
+					</div>
+					<% end %>
 					<div class="dynamic-flex"></div>
 					<div class="fixed-flex post-id">
 						<%= post.id %>

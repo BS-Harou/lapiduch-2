@@ -20,7 +20,7 @@ users =
 		queryData =
 			searchBy: if typeof ident is 'number' then 'id' else 'norm_username'
 			ident: ident
-		db.one("""
+		db.oneOrNone("""
 			SELECT id, username, norm_username, activate, motto, avatar
 			FROM users
 			WHERE users.${searchBy~}=${ident}

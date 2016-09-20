@@ -75,7 +75,7 @@ history =
 	update: (data) ->
 		storeData = @transformIn data
 		db.none("""
-			UPDATE INTO history
+			UPDATE history
 			SET post_id=${postId}
 			WHERE user_id=${userId} AND club_id=${clubId}
 		""", storeData)

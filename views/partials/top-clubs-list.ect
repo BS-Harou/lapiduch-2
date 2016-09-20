@@ -1,7 +1,7 @@
 <ol>
 	<% for club in @topConfig.list : %>
 	<li>
-		<a href="/kluby/<%= club.normName %>"><%= club.name %></a>
+		<a href="/klub/<%= club.normName %>"><%= club.name %></a>
 		<div class="top-info">
 			<%= @topConfig.colName %>: <%= club[@topConfig.colKey] %>
 		</div>

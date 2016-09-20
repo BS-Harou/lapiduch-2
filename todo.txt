@@ -1,9 +1,31 @@
 => dodelat users/categories/clubs/posts zakladni funkcionalitu
+
+	- user
+		create: ✓
+		edit: (settings)
+		delete: (only admin)
+	- category
+		create: (only admin)
+		edit: (only admin, assigning category owners)
+		delete: (only admin)
+	- club
+		create: ✓
+		update: 
+		delete: (owner, category owner, admin)
+	- posts
+		create: ✓
+		delete:
+		search: 
+
+
 => posilani chyb z BE na FE (flash messages, debug only messages) 
 => redis postgre reconnect
 => redirect (probably) to prevent resubmit of forms
 => all forms validations
-=> Production reCAPTCHA, template public key from settings (recaptcha.formElement())
+=> Production reCAPTCHA, template public key from settings (recaptcha.fromElement())
+=> is-my-json-valid
+=> sanitizeHtml
+
 
 DB
 => on n:m tables use e.g. club_id:user_id as primary key isntead of id
@@ -13,15 +35,12 @@ DB
 
 
 - Responsive page
-- passport fb/tw/g auth
 - split app.coffee
-- Google "I am not a robot" captcha for signup (reCAPTCHA)
 - Use default yaml config when its not present in custom yaml config
 - One postgre connection? (pg-promise github)
 - What to do with multer and csurf when using form multipart?
 - Presmerovavat 404 na index nebo u nepristupnych sekci bez prihlaseni redirectovat misto volani next()
-- Fill form items when form is returne invalid
-- Add content-single instad of single content-right (kategorie, kluby)
+- Fill form items when form is returned invalid
 - Vlidate names of entities to contain only normal characters (validations in general)
 - created_at bigint -> timestamp
 - tab indexes (new post form, ...)
@@ -32,17 +51,19 @@ rhc port-forward -a app
 
 
 
-PERF/SECURITY:
-- throttle avatar uploads
-- avatar change limit (10x a day or so)
-
-
-
 TICKETS:
 - Favorites
 - Mail
 - Openshift SSL
-- Auth email
 - Top lists day aggregations
 - Category list aggregations
 - Search
+
+___ V2 ___
+
+=> extended club stats
+=> Profile info
+=> throttle avatar uploads
+=> avatar change limit (10x a day or so)
+=> quill
+=> passport fb/tw/g auth

@@ -21,6 +21,7 @@ routes =
 	categories: require('./routes/categories')
 	newClub: require('./routes/new-club')
 	clubs: require('./routes/clubs')
+	club: require('./routes/club')
 	activity: require('./routes/activity')
 	favorites: require('./routes/favorites')
 	search: require('./routes/search')
@@ -104,6 +105,7 @@ app.use '/nastaveni', routes.settings
 app.use '/kategorie', routes.categories
 app.use '/novyklub', routes.newClub
 app.use '/kluby', routes.clubs
+app.use '/klub', routes.club
 app.use '/pritomni', routes.activity
 app.use '/oblibene', routes.favorites
 app.use '/hledani', routes.search

@@ -4,12 +4,17 @@
 	<% for club in @clubsList : %>
 		<tr>
 			<td>
-				<a href="/kluby/<%= club.normName %>"><%= club.name %></a>
+				<a href="/klub/<%= club.normName %>"><%= club.name %></a>
 				<span class="club-desc"><%= club.description %></span>
 			</td>
 			<td class="posts-amount">
-				<% if club.postsCounts : %>
-				(<%= club.postsCount %> <% if club.postsCount in [2,3,4] : %>příspěvky<% else : %>příspěvků<% end %>)
+				<% if club.postsCount : %>
+				(
+					<%= club.postsCount %> <% if club.postsCount in [2,3,4] : %>příspěvky<% else : %>příspěvků<% end %>
+					<% if club.newPostsCount : %>
+						, <%= club.newPostsCount %> <% if club.newPostsCount in [2,3,4] : %>nové<% else : %>nových<% end %>
+					<% end %>
+				)
 				<% else if club.visits : %>
 				(<%= club.visits %> <% if club.visits in [2,3,4] : %>návštěvy<% else : %>návštěv<% end %>)
 				<% else : %>

@@ -70,6 +70,12 @@ header li.highlighted-item a {
 .dynamic-flex {
   flex: 1 1 auto;
 }
+.compact-form .form-group {
+  margin-bottom: 0.1rem;
+}
+a {
+  cursor: pointer;
+}
 /**
  * Top panel
  */
@@ -272,6 +278,10 @@ header li.highlighted-item a {
 .new-mail-form {
   max-width: 40rem;
 }
+.new-post-form textarea,
+.new-mail-form textarea {
+  min-height: 6rem;
+}
 /**
  * Posts list
  */
@@ -316,6 +326,13 @@ header li.highlighted-item a {
   color: #842163;
   font-size: 0.8rem;
   margin-left: 0.4rem;
+}
+.posts-list .post-filtered-links {
+  font-size: 0.8rem;
+  margin-left: 0.4rem;
+}
+.posts-list .post-filtered-links a {
+  color: #a86d02;
 }
 .posts-list .post-id {
   color: #a5adc6;

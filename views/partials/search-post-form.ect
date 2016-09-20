@@ -1,13 +1,11 @@
-<form method="post" action="/kluby/<%= @clubIdent %>/hledat" class="search-post-form">
+<form method="get" action="/klub/<%= @clubIdent %>" class="search-post-form compact-form">
 	<div class="container">
-		<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
-
 		<div class="form-group row row-no-padding">
 			<label for="search-post-author" class="col-xs-3 form-control-label">
 				autor:
 			</label>
 			<div class="col-xs-9 login-control">
-				<input type="text" id="search-post-author" name="author" class="form-control form-control-sm" />
+				<input type="text" id="search-post-author" name="author" class="form-control form-control-sm" value="<%= @author %>" />
 			</div>
 		</div>
 
@@ -16,7 +14,7 @@
 				text:
 			</label>
 			<div class="col-xs-9 login-control">
-				<input type="text" id="search-post-text" name="text" class="form-control form-control-sm" />
+				<input type="text" id="search-post-text" name="text" class="form-control form-control-sm" value="<%= @text %>" />
 			</div>
 		</div>
 		

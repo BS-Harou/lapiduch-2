@@ -1,8 +1,13 @@
+<%
+	qs = ''
+	qs += '&author=' + @author if @author
+	qs += '&text=' + @text if @text
+%>
 <div class="post-pagination">
-	<a class="pagination-item" href="/kluby/<%= @clubIdent %>/?from=<%= @topPostId %>">&lt;Novější</a>
-	<a class="pagination-item" href="/kluby/<%= @clubIdent %>/?to=0">&lt;&lt;&lt;Nejnovější</a>
-	<a class="pagination-item" href="/kluby/<%= @clubIdent %>/?from=0">Nejstarší&gt;&gt;&gt;</a>
-	<a class="pagination-item" href="/kluby/<%= @clubIdent %>/?to=<%= @bottomPostId %>">Starší&gt;</a>
+	<a class="pagination-item" href="/klub/<%= @clubIdent %>/?from=<%= @topPostId %><%= qs %>">&lt;Novější</a>
+	<a class="pagination-item" href="/klub/<%= @clubIdent %>/?to=0<%= qs %>">&lt;&lt;&lt;Nejnovější</a>
+	<a class="pagination-item" href="/klub/<%= @clubIdent %>/?from=0<%= qs %>">Nejstarší&gt;&gt;&gt;</a>
+	<a class="pagination-item" href="/klub/<%= @clubIdent %>/?to=<%= @bottomPostId %><%= qs %>">Starší&gt;</a>
 
-	<a class="pagination-item" href="/kluby/<%= @clubIdent %>/oblibit">Oblíbit</a>
+	<a class="pagination-item" href="/klub/<%= @clubIdent %>/oblibit">Oblíbit</a>
 </div>

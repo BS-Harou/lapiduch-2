@@ -22,7 +22,7 @@
 			<div class="search-form-header">Seznam moderátorů</div>
 			<div class="moderators-list">
 			<% for moderator in @moderatorsList : %>
-				<form method="post" action="/kluby/<%= @clubIdent %>/prava" class="moderators-list-item">
+				<form method="post" action="/klub/<%= @clubIdent %>/prava" class="moderators-list-item">
 					<input type="hidden" name="_csrf" value="<%= @csrfToken %>">
 					<img src="<%= moderator.avatar %>" />
 					<a href="/posta/?to=<%= moderator.normUsername %>"><%= moderator.username %></a>

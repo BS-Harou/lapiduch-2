@@ -64,7 +64,12 @@ clubs =
 		queryData =
 			userId: userId
 		db.query("""
-			SELECT clubs.*, favorites.type as favorites_type, COUNT(posts.id) as posts_count
+			SELECT 
+				clubs.*, favorites.type as favorites_type, COUNT(posts.id) as posts_count,
+				(
+					SELECT COUNT(*) FROM posts
+					WHERE id > (SELECT post_id FROM history WHERE club_id=posts.club_id AND user_id=${userId}) AND club_id=clubs.id
+				) as new_posts_count
 			FROM clubs
 			INNER JOIN favorites ON clubs.id=favorites.club_id
 			LEFT JOIN posts ON clubs.id=posts.club_id
@@ -239,7 +244,8 @@ clubs =
 		favoritesType: data.favorites_type
 		favoritesTypeData: FAVORITES_TYPES_LIST[data.favorites_type - 1]
 		visits: data.visits
-		postsCount: data.posts_count
+		postsCount: Number data.posts_count
+		newPostsCount: Number data.new_posts_count
 
 	###*
 		@param {!Object} t transaction
